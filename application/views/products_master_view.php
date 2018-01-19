@@ -2,11 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?><!DOCTYPE html>
 <html lang="en">
-
     <div class="sh-headpanel">
-  
     </div><!-- sh-headpanel -->
-
     <div class="sh-mainpanel">
       <div class="sh-breadcrumb">
         <nav class="breadcrumb">
@@ -23,9 +20,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            <form class="form-horizontal" id="form_productmaster">
               <div class="form-group">
                 <label for="inputFinance" class="col-sm-2 control-label">Product Name:<span class="tx-danger">*</span></label>
-                  <div class="col-sm-5 input-group date">
+                  <div class="col-sm-5 input-group">
                   <input class="form-control pull-right" id="productname" name="productname" type="text" required>
                   </div>
+                <div class="col-sm-5 input-group" id="product_msg"></div>
+              </div>
+              <div class="form-group">
+                <label for="inputFinance" class="col-sm-2 control-label">Product Description:</label>
+                  <div class="col-sm-5 input-group">
+                  <input class="form-control pull-right" id="productdescription" name="productdescription" type="text">
+                  </div>
+                <div id="descipt_msg"></div>
               </div>
            
               <div class="form-group">
@@ -67,18 +72,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       //submit data
       //var path = $('#path').val();
       //var path="localhost/invoicemanagement/"
-      console.log("path",path);
+      //console.log("path",path);
       //alert(path);
       var productname=$('#productname').val();
+      var productdescription=$('#productdescription').val();
       //alert(productname);
       $.ajax({
                 type:'POST',
-                url:'<?php echo base_url("index.php/settings/add_product_master"); ?>',
-                data:{'productname':productname},
+                url:'<?php echo base_url("index.php/mastersetting/add_product_master"); ?>',
+                data:{'productname':  productname,'productdescription':productdescription},
                 success:function(data){
                     $('#addproduct_msg').removeClass('alert alert-danger mg-b-0');
                     $('#addproduct_msg').html('Data Inserted Successfully').addClass('alert alert-success');
                     $('#productname').val('');
+                    $('#productdescription').val('');
                 },
                 error : function(error)
                 {
@@ -94,8 +101,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   {
       if($('#productname').val() == "")
       {
-        $('#addproduct_msg').removeClass('alert alert-success');
-        $('#addproduct_msg').html('<div class="alert alert-danger mg-b-0" role="alert">Please Enter Product Name</div>');
+        $('#product_msg').html('');
+        $('#product_msg').html('<div style="color:red" role="alert">Please Enter Product Name</div>');
         //alert("Please Enter Product Name");
         return false;
       }
@@ -103,6 +110,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         return true;
   }
 
-}
 </script> 
 </html>

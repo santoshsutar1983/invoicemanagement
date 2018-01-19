@@ -2,25 +2,34 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Invoice System</title>
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/lib/font-awesome/css/font-awesome.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/lib/Ionicons/css/ionicons.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/lib/perfect-scrollbar/css/perfect-scrollbar.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/lib/font-awesome/css/font-awesome.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/lib/Ionicons/css/ionicons.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/lib/perfect-scrollbar/css/perfect-scrollbar.css">
+  
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/lib/select2/css/select2.min.css">
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/lib/spectrum/spectrum.css">
+
+
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/css/shamcey.css">
 
-    <script type='text/javascript' src="<?php echo base_url(); ?>/assets/lib/jquery/jquery.js"></script>
-    <script type='text/javascript' src="<?php echo base_url(); ?>/assets/lib/popper.js/popper.js"></script>
-    <script type='text/javascript' src="<?php echo base_url(); ?>/assets/lib/bootstrap/bootstrap.js"></script>
-    <script type='text/javascript' src="<?php echo base_url(); ?>/assets/lib/jquery-ui/jquery-ui.js"></script>
-    <script type='text/javascript' src="<?php echo base_url(); ?>/assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
-    <script type='text/javascript' src="<?php echo base_url(); ?>/assets/lib/moment/moment.js"></script>
-    
-    <script type='text/javascript' src="<?php echo base_url(); ?>/assets/lib/Flot/jquery.flot.js"></script>
-    <script type='text/javascript' src="<?php echo base_url(); ?>/assets/lib/Flot/jquery.flot.resize.js"></script>
-    <script type='text/javascript' src="<?php echo base_url(); ?>/assets/lib/flot-spline/jquery.flot.spline.js"></script>
-    <script type='text/javascript' src="<?php echo base_url(); ?>/assets/js/shamcey.js"></script>
-    <script type='text/javascript' src="<?php echo base_url(); ?>/assets/js/dashboard.js"></script>
+    <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/jquery/jquery.js"></script>
+    <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/popper.js/popper.js"></script>
+    <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/bootstrap/bootstrap.js"></script>
+    <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/jquery-ui/jquery-ui.js"></script>
+    <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/moment/moment.js"></script>
+    <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/select2/js/select2.min.js"></script>
+    <script src="../"></script>
+    <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/moment/moment.js"></script>
+  
+    <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/Flot/jquery.flot.js"></script>
+    <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/Flot/jquery.flot.resize.js"></script>
+    <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/flot-spline/jquery.flot.spline.js"></script>
+    <script type='text/javascript' src="<?php echo base_url(); ?>assets/js/shamcey.js"></script>
+    <script type='text/javascript' src="<?php echo base_url(); ?>assets/js/dashboard.js"></script>
   	<style type="text/css">
- 
+
+
 	</style>
 </head>
 
@@ -121,12 +130,12 @@
             <span>Settings</span>
           </a>
           <ul class="nav-sub">
-            <li class="nav-item"><a href="<?php echo site_url('settings/index') ?>" class="nav-link">Product Master</a></li>
-            <li class="nav-item"><a href="form-layouts.html" class="nav-link">Service Master</a></li>
-            <li class="nav-item"><a href="form-validation.html" class="nav-link">Product-Service Mapping</a></li>
-            <li class="nav-item"><a href="form-wizards.html" class="nav-link">Customer Master</a></li>
-            <li class="nav-item"><a href="form-editor-text.html" class="nav-link">Employee Master</a></li>
-            <li class="nav-item"><a href="form-editor-text.html" class="nav-link">SMS Template</a></li>
+            <li class="nav-item"><a href="<?php echo site_url('mastersetting/index') ?>" class="nav-link">Products Master</a></li>
+            <li class="nav-item"><a href="<?php echo site_url('mastersetting/services_master_view') ?>" class="nav-link">Services Master</a></li>
+            <li class="nav-item"><a href="<?php echo site_url('mastersetting/productservice_mapping_master_view') ?>" class="nav-link">Product-Service Mapping</a></li>
+            <li class="nav-item"><a href="<?php echo site_url('mastersetting/customer_master_view') ?>" class="nav-link">Customer Master</a></li>
+            <li class="nav-item"><a href="<?php echo site_url('mastersetting/staff_master_view') ?>" class="nav-link">Employee Master</a></li>
+            <li class="nav-item"><a href="<?php echo site_url('mastersetting/smstemplate_master_view') ?>" class="nav-link">SMS Template</a></li>
           </ul>
         </li><!-- nav-item -->
 
