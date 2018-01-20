@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            <form class="form-horizontal" id="form_productservice_mapping">
             <div class="row">
             </div>
-            <div class="col-lg-4 mg-t-20 mg-lg-t-0">
+            <div class="col-lg-4 mg-t-20 mg-lg-t-0"><span class="tx-danger">*</span>
                 <select id= "selectproduct" class="form-control select2-show-search" data-placeholder="Select Product">
                 <option value="">Select Product</option>
                 <?php foreach ($products as $p)
@@ -35,8 +35,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <div style="width:100%"  id="selectproduct_msg"></div>
               </div><!-- col-4 -->
               <br>
-              <div class="col-lg-4 mg-t-20 mg-lg-t-0">
-                <select id= "selectservice" class="form-control select2-show-search" data-placeholder="Select Service">
+              <div class="col-lg-4 mg-t-20 mg-lg-t-0"><span class="tx-danger">*</span>
+                <select id="selectservice" class="form-control select2-show-search" data-placeholder="Select Service">
                 <option value="">Select Service</option>
                 <?php foreach($services as $s)
                  { 
@@ -71,9 +71,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </body>
 <script type="text/javascript">
   $(document).ready(function(){
-   $('#selectproduct').select2();
-   $('#selectservice').select2();
-//   $('.date-picker').datepicker("option", "dateFormat", "dd-mm-yy");
+   //$('#selectproduct').select2();
+   //$('#selectservice').select2();
+   //$('#selectservice').multiselect();
+ //$('.date-picker').datepicker("option", "dateFormat", "dd-mm-yy");
   });
   function submitMaster(formId) {
     //validate
@@ -91,11 +92,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       //alert(path);
       var productid=$('#selectproduct').val();
       var serviceid=$('#selectservice').val();
-      //alert(productname);
       $.ajax({
                 type:'POST',
                 url:'<?php echo base_url("index.php/mastersetting/add_productservice_mapping_master"); ?>',
-                data:{'productid': productid,'serviceid':serviceid},
+                data:{'selectproduct': productid,'selectservice':serviceid},
                 success:function(data){
                     $('#addpsmapping_msg').removeClass('alert alert-danger mg-b-0');
                     $('#addpsmapping_msg').html('Data Inserted Successfully').addClass('alert alert-success');

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,19 +19,20 @@
     <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/jquery-ui/jquery-ui.js"></script>
     <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
     <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/moment/moment.js"></script>
-    <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/select2/js/select2.min.js"></script>
-    <script src="../"></script>
-    <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/moment/moment.js"></script>
-  
-    <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/Flot/jquery.flot.js"></script>
+
+     <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/Flot/jquery.flot.js"></script>
     <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/Flot/jquery.flot.resize.js"></script>
     <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/flot-spline/jquery.flot.spline.js"></script>
     <script type='text/javascript' src="<?php echo base_url(); ?>assets/js/shamcey.js"></script>
     <script type='text/javascript' src="<?php echo base_url(); ?>assets/js/dashboard.js"></script>
+
+     <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/select2/js/select2.min.js"></script>
+     <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/moment/moment.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
   	<style type="text/css">
-
-
-	</style>
+</style>
 </head>
 
 <div class="sh-logopanel">

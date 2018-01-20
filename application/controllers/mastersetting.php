@@ -50,7 +50,18 @@ class Mastersetting extends CI_Controller {
     $query=$this->mastersetting_model->service_insert($data);
     }
 
-    public function add_finance()
+    // This function call from AJAX
+    public function add_productservice_mapping_master()
+    {
+    $data = array(
+    'productid' => $this->input->post('selectproduct'),'serviceid' => $this->input->post('selectservice'),
+    );
+    $this->load->model('mastersetting_model');
+    $query=$this->mastersetting_model->productserice_mapping_insert($data);
+    }
+   
+
+/*    public function add_finance()
     {
         $data['years'] = $this->input->post('inputFinance');
         $this->form_validation->set_data($data);
@@ -66,7 +77,7 @@ class Mastersetting extends CI_Controller {
             $this->output->set_content_type('application/json');
             $this->output->set_output(json_encode(array('status'=>'0','message'=> $this->form_validation->get_error_as_array())));
         }
-    }
+    }*/
 	  
     // end of add product master
 

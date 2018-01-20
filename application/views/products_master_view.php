@@ -44,12 +44,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </div><!-- card-body -->
         </div><!-- card -->
       </div>
-    
-      <div class="sh-footer">
+      <div style="position:fixed;margin:0" class="sh-footer">
         <div>Copyright &copy; 2017</div>
         <div class="mg-t-10 mg-md-t-0">Designed by: <a href="#">Prisms Communications</a></div>
       </div> 
       <!-- sh-footer -->
+     
     </div><!-- sh-mainpanel -->
 
   </body>
@@ -111,4 +111,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   }
 
 </script> 
+
 </html>
