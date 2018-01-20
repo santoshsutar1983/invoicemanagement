@@ -87,15 +87,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 {
                     $('#addservice_msg').removeClass('alert alert-success');
                     $('#addservice_msg').html('Error while Adding Data').addClass('alert alert-danger mg-b-0');
-                    $('#servicename').val('');
-                    $('#servicedescription').val('');
                 }
             });
     }
   }
 
   function isValidServiceMasterForm()
-  {
+  {   
+      $('#service_msg').html('');
       if($('#servicename').val() == "")
       {
         $('#service_msg').html('');

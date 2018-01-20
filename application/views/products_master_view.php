@@ -91,7 +91,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 {
                     $('#addproduct_msg').removeClass('alert alert-success');
                     $('#addproduct_msg').html('Error while Adding Data').addClass('alert alert-danger mg-b-0');
-                    $('#productname').val('');
                 }
             });
     }
@@ -99,6 +98,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
   function isValidProductMasterForm()
   {
+      $('#product_msg').html('');
       if($('#productname').val() == "")
       {
         $('#product_msg').html('');

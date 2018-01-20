@@ -106,15 +106,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 {
                     $('#addpsmapping_msg').removeClass('alert alert-success');
                     $('#addpsmapping_msg').html('Error while Adding Data').addClass('alert alert-danger mg-b-0');
-                    $('#selectproduct').val('');
-                    $('#selectservice').val('');
+                   
                 }
             });
     }
   }
 
   function isValidForm()
-  {
+  {   
+      $('#selectproduct_msg').html('');
+      $('#selectservice_msg').html('');
+      
       if($('#selectproduct').val() == "")
       {
         $('#selectproduct_msg').html('');

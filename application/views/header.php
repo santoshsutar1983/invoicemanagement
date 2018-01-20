@@ -29,10 +29,14 @@
      <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/select2/js/select2.min.js"></script>
      <script type='text/javascript' src="<?php echo base_url(); ?>assets/lib/moment/moment.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
-  	<style type="text/css">
-</style>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js'></script>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css'>
+  	
+<!--     <script src='https://cdnjs.cloudflare.com/ajax/libs/validate-js/2.0.1/validate.js'></script> -->
+    <script src='http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js'></script>
+
+
+
 </head>
 
 <div class="sh-logopanel">
@@ -53,9 +57,9 @@
         <li class="nav-item">
           <a href="" class="nav-link with-sub">
             <i class="icon ion-ios-bookmarks-outline"></i>
-            <span>Pages</span>
+            <span>Invoice</span>
           </a>
-          <ul class="nav-sub">
+          <!-- <ul class="nav-sub">
             <li class="nav-item"><a href="blank.html" class="nav-link">Add Masters</a></li>
             <li class="nav-item"><a href="blank.html" class="nav-link">Masters List</a></li>
             <li class="nav-item"><a href="page-mailbox.html" class="nav-link">Mailbox</a></li>
@@ -69,15 +73,15 @@
             <li class="nav-item"><a href="page-signin.html" class="nav-link">Signin Page</a></li>
             <li class="nav-item"><a href="page-signup.html" class="nav-link">Signup Page</a></li>
             <li class="nav-item"><a href="page-notfound.html" class="nav-link">404 Page Not Found</a></li>
-          </ul>
+          </ul> -->
         </li><!-- nav-item -->
         
         <li class="nav-item">
           <a href="" class="nav-link with-sub">
             <i class="icon ion-ios-filing-outline"></i>
-            <span>UI Elements</span>
+            <span>Payment</span>
           </a>
-          <ul class="nav-sub">
+          <!-- <ul class="nav-sub">
             <li class="nav-item"><a href="accordion.html" class="nav-link">Accordion</a></li>
             <li class="nav-item"><a href="alerts.html" class="nav-link">Alerts</a></li>
             <li class="nav-item"><a href="buttons.html" class="nav-link">Buttons</a></li>
@@ -90,32 +94,32 @@
             <li class="nav-item"><a href="progress.html" class="nav-link">Progress</a></li>
             <li class="nav-item"><a href="spinners.html" class="nav-link">Spinners</a></li>
             <li class="nav-item"><a href="typography.html" class="nav-link">Typography</a></li>
-          </ul>
+          </ul> -->
         </li> <!-- nav-item -->
          <li class="nav-item">
           <a href="" class="nav-link with-sub">
             <i class="icon ion-ios-analytics-outline"></i>
-            <span>Charts</span>
+            <span>HRM</span>
           </a>
-          <ul class="nav-sub">
+          <!-- <ul class="nav-sub">
             <li class="nav-item"><a href="chart-morris.html" class="nav-link">Morris Charts</a></li>
             <li class="nav-item"><a href="chart-flot.html" class="nav-link">Flot Charts</a></li>
             <li class="nav-item"><a href="chart-chartjs.html" class="nav-link">Chart JS</a></li>
             <li class="nav-item"><a href="chart-rickshaw.html" class="nav-link">Rickshaw</a></li>
             <li class="nav-item"><a href="chart-sparkline.html" class="nav-link">Sparkline</a></li>
-          </ul>
+          </ul> -->
         </li> <!-- nav-item -->
         <li class="nav-item">
           <a href="" class="nav-link with-sub">
             <i class="icon ion-ios-navigate-outline"></i>
-            <span>Maps</span>
+            <span>Reports</span>
           </a>
-          <ul class="nav-sub">
+          <!-- <ul class="nav-sub">
             <li class="nav-item"><a href="map-google.html" class="nav-link">Google Maps</a></li>
             <li class="nav-item"><a href="map-vector.html" class="nav-link">Vector Maps</a></li>
-          </ul>
+          </ul> -->
         </li> <!-- nav-item -->
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a href="" class="nav-link with-sub">
             <i class="icon ion-ios-list-outline"></i>
             <span>Tables</span>
@@ -124,7 +128,7 @@
             <li class="nav-item"><a href="table-basic.html" class="nav-link">Basic Table</a></li>
             <li class="nav-item"><a href="table-datatable.html" class="nav-link">Data Table</a></li>
           </ul>
-        </li><!-- nav-item -->
+        </li> --><!-- nav-item -->
 
          <li class="nav-item">
           <a href="" class="nav-link with-sub">

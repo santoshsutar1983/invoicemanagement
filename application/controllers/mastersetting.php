@@ -27,6 +27,13 @@ class Mastersetting extends CI_Controller {
         $this->load->view('productservice_mapping_master_view',$data);
     }
 
+    // To load customer master page view
+    public function customer_master_view()
+    {
+        $this->load->view('header');
+        $this->load->view('customer_master_view');
+    }
+
    	// This function call from AJAX
 	public function add_product_master()
 	{
