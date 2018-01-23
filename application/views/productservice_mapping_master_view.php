@@ -57,6 +57,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </div>
            </form>
            <div id="addpsmapping_msg"></div>
+
+           <div class="table-wrapper">
+              <table id="psdatatable" class="table display responsive nowrap" width="70%">
+                <thead>
+                  <tr>
+                    <th class="wd-15p">Sr.No</th><th class="wd-15p">Product Name</th><th class="wd-15p">Service Name</th><th class="wd-15p">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <?php 
+                $i=1;
+                foreach ($psmapping as $m)
+                { ?>
+                 <tr>
+                    <td><?php echo $i; ?></td>
+                    <td id='<?php echo "product_".$m['psmap_id'] ?>' data-original-value="<?php echo $m['productname'] ?>" > <?php echo $m['productname'] ?></td>
+                    <td id='<?php echo "service_".$m['psmap_id'] ?>' data-original-value="<?php echo $m['servicename'] ?>" ><?php echo $m['servicename'] ?></td>
+                    <td><!-- <a class="img-link" href="javascript:void(0);" data-action="show_gui" id='<?php //echo "editimg_".$m['psmap_id'] ?>' onclick="editMaster(this,'productid',<?php //echo $m['psmap_id'] ?>);">
+                    <img src="<?php //echo base_url(); ?>assets/img/edit.png" width="20" height="20"/></a> -->
+                     <a class="img-link" href="javascript:void(0);" id='<?php echo "deleteimg_".$m['psmap_id'] ?>' onclick="deleteMaster(this,'psmapid',<?php echo $m['psmap_id'] ?>);">
+                    <img src="<?php echo base_url(); ?>assets/img/delete.png" width="20" height="20"/>
+                     </a>
+                     <!-- <a class="img-link" href="javascript:void(0);" id='<?php //echo "cancelimg_".$m['psmap_id'] ?>'>
+                     </a> -->
+                    </td>
+                  </tr>
+                 <?php 
+                  $i++;
+                  }
+
+                  ?>  
+                </tbody>
+              </table>
+            </div><!-- table-wrapper -->
+
+
           </div><!-- card-body -->
         </div><!-- card -->
       </div>
@@ -71,10 +107,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </body>
 <script type="text/javascript">
   $(document).ready(function(){
-   //$('#selectproduct').select2();
-   //$('#selectservice').select2();
-   //$('#selectservice').multiselect();
- //$('.date-picker').datepicker("option", "dateFormat", "dd-mm-yy");
+   $('#psdatatable').DataTable({
+          responsive: true,
+          language: {
+            searchPlaceholder: 'Search...',
+            sSearch: '',
+            lengthMenu: '_MENU_ items/page',
+          }
+       });
   });
   function submitMaster(formId) {
     //validate
@@ -134,6 +174,46 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       else
         return true;
   }
+
+  function deleteMaster(element,formType,uid)
+  {
+    var path= '<?php echo base_url();?>'
+    //productname=  $("#psmapping_"+uid).val();
+    productname=$("#product_"+uid).data('original-value');
+    servicename=$("#service_"+uid).data('original-value');
+    //alert(productname);
+    var confirmation = confirm('Confirm to Delete '+ productname + '-'+ servicename + ' Mapping ? ');
+    if(confirmation == false)
+      return;
+    var action = 'delete_product_master';
+    $.ajax({
+              url:'<?php echo base_url("index.php/mastersetting/delete_product_master"); ?>',
+              type:'POST',
+              data : {product_id:uid},
+              dataType: 'JSON',
+              success : function(data){
+                  if(data.status == 1)
+                  {
+                    alert(productname + " deleted successfully !");
+                    $(element).closest('tr').remove();
+                  }
+                  else
+                  {
+                      var err = '';
+                      for(msg in data.message)
+                      {
+                          err += data.message[msg];
+                      } 
+                      alert(err);
+                  }
+                //alert the message
+              },
+              error : function(error){
+                alert("network Error");
+              }
+        });
+  }
+
 
 </script> 
 </html>

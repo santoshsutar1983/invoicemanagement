@@ -49,6 +49,21 @@ class mastersetting_model extends CI_Model{
         $query = $this->db->get('tbl_service_master');
         return $query->result_array();
     }
+    // function to get product service mapping data from service_master tbl
+	function get_psmapping() 
+	{
+        //$this->db->select('*');
+		//$this->db->from('tbl_productservice_mapping');
+       // $query = $this->db->get();
+        //print_r($query);die;
+
+        $this->db->select('psm.psmap_id,psm.productid,psm.serviceid,p.productname,s.servicename', false);
+		$this->db->from('tbl_productservice_mapping as psm');
+		$this->db->join('tbl_product_master as p', 'psm.productid = p.product_id');
+	    $this->db->join('tbl_service_master as s', 'psm.productid = s.service_id');
+		$query = $this->db->get();
+        return $query->result_array();
+    }
     // function to get sms text data as per template name
 	function get_smstemplatetextby_name($name) 
 	{ 

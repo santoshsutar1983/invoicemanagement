@@ -29,6 +29,7 @@ class Mastersetting extends CI_Controller {
         $this->load->model('mastersetting_model');
         $data['products'] = $this->mastersetting_model->get_products();
         $data['services'] = $this->mastersetting_model->get_services();
+        $data['psmapping'] = $this->mastersetting_model->get_psmapping(); 
         //print_r($data);die;
         $this->load->view('header');
         $this->load->view('productservice_mapping_master_view',$data);

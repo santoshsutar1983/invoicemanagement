@@ -221,7 +221,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   function deleteMaster(element,formType,uid)
   {
     var path= '<?php echo base_url();?>'
-    productname=  $("#productname_"+uid).val();
+    productname=$("#productname_"+uid).data('original-value');
     var confirmation = confirm('Confirm to Delete '+ productname + ' ? ');
     if(confirmation == false)
       return;

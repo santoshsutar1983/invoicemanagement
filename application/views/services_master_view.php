@@ -214,7 +214,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   function deleteMaster(element,formType,uid)
   {
     var path= '<?php echo base_url();?>'
-    servicename=  $("#servicename_"+uid).val();
+    servicename=$("#servicename_"+uid).data('original-value');
+    //alert(servicename);
     var confirmation = confirm('Confirm to Delete '+ servicename + ' ? ');
     if(confirmation == false)
       return;
