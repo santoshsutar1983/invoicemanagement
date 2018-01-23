@@ -34,19 +34,34 @@ class Mastersetting extends CI_Controller {
         $this->load->view('header');
         $this->load->view('productservice_mapping_master_view',$data);
     }
+    // To load attributes master page view
+    public function attributes_master_view()
+    {
+        // Call get_service from mastersetting_model here, first Load Model
+        $this->load->model('mastersetting_model');
+        $data['attributes'] = $this->mastersetting_model->get_attributes();
+        $this->load->view('header');
+        $this->load->view('attributes_master_view',$data);
+    }
 
     // To load customer master page view
     public function customer_master_view()
     {
+        // Call get_customers from mastersetting_model here, first Load Model
+        $this->load->model('mastersetting_model');
+        $data['customers'] = $this->mastersetting_model->get_customers();
         $this->load->view('header');
-        $this->load->view('customer_master_view');
+        $this->load->view('customer_master_view',$data);
     }
 
     // To load employee master page view
     public function employee_master_view()
-    {
+    { 
+        // Call get_employees from mastersetting_model here, first Load Model
+        $this->load->model('mastersetting_model');
+        $data['employees'] = $this->mastersetting_model->get_employees();
         $this->load->view('header');
-        $this->load->view('employee_master_view');
+        $this->load->view('employee_master_view',$data);
     }
     // To load sms template master page view
     public function smstemplate_master_view()
@@ -60,7 +75,7 @@ class Mastersetting extends CI_Controller {
 	public function add_product_master()
 	{
     	$data = array(
-    	'productname' => $this->input->post('productname')
+    	'productname' => trim($this->input->post('productname'))
         );
         $this->load->model('mastersetting_model');
         $query=$this->mastersetting_model->product_insert($data);
@@ -73,10 +88,20 @@ class Mastersetting extends CI_Controller {
     public function add_service_master()
     {
         $data = array(
-        'servicename' => $this->input->post('servicename')
+        'servicename' => trim($this->input->post('servicename'))
         );
         $this->load->model('mastersetting_model');
         $query=$this->mastersetting_model->service_insert($data);
+    }
+
+    // This function call from AJAX
+    public function add_attribute_master()
+    {
+        $data = array(
+        'attributename' => trim($this->input->post('attributename'))
+        );
+        $this->load->model('mastersetting_model');
+        $query=$this->mastersetting_model->attribute_insert($data);
     }
 
     // This function call from AJAX
@@ -93,10 +118,10 @@ class Mastersetting extends CI_Controller {
     public function add_customer_master()
     {
         $data = array(
-        'customername' => $this->input->post('customername'),
-        'contact' => $this->input->post('contact'),
-        'address' => $this->input->post('address'),
-        'email' => $this->input->post('email')
+        'customername' => trim($this->input->post('customername')),
+        'contact' => trim($this->input->post('contact')),
+        'address' => trim($this->input->post('address')),
+        'email' => trim($this->input->post('email'))
         );
         $this->load->model('mastersetting_model');
         $query=$this->mastersetting_model->customer_insert($data);
@@ -106,21 +131,21 @@ class Mastersetting extends CI_Controller {
     public function add_employee_master()
     {
          $data = array(
-        'employeename' => $this->input->post('employeename'),
-        'contact' => $this->input->post('contact'),
-        'address' => $this->input->post('address'),
-        'email' => $this->input->post('email')
+        'employeename' => trim($this->input->post('employeename')),
+        'contact' => trim($this->input->post('contact')),
+        'address' => trim($this->input->post('address')),
+        'email' => trim($this->input->post('email'))
         );
         $this->load->model('mastersetting_model');
-        $query=$this->mastersetting_model->staff_insert($data);
+        $query=$this->mastersetting_model->employee_insert($data);
     }
 
     // This function call from AJAX
     public function add_smstemplate_master()
     {
          $data = array(
-        'name' => $this->input->post('smstemplate'),
-        'text' => $this->input->post('smstext')
+        'name' => trim($this->input->post('smstemplate')),
+        'text' => trim($this->input->post('smstext'))
         );
         $this->load->model('mastersetting_model');
         $query=$this->mastersetting_model->smstemplate_insert($data);
@@ -129,7 +154,7 @@ class Mastersetting extends CI_Controller {
     public function smstextby_name()
     {
         //$data=array('name'=>$this->input->post('smstemplate'));
-        $name=$this->input->post('smstemplate');
+        $name=trim($this->input->post('smstemplate'));
         $this->load->model('mastersetting_model');
         $query=$this->mastersetting_model->get_smstemplatetextby_name($name);
     }
@@ -137,7 +162,7 @@ class Mastersetting extends CI_Controller {
   //Call from  AJAX to update product data
     public function update_product_master()
     {
-        $data['productname'] = $this->input->post('productname');
+        $data['productname'] = trim($this->input->post('productname'));
         $id = $this->input->post('product_id');
         $this->load->model('mastersetting_model');
         $this->mastersetting_model->update_product_master($data,$id);
@@ -158,7 +183,7 @@ class Mastersetting extends CI_Controller {
     //Call from  AJAX to update product data
     public function update_service_master()
     {
-        $data['servicename'] = $this->input->post('servicename');
+        $data['servicename'] = trim($this->input->post('servicename'));
         $id = $this->input->post('service_id');
         $this->load->model('mastersetting_model');
         $this->mastersetting_model->update_service_master($data,$id);
@@ -176,7 +201,81 @@ class Mastersetting extends CI_Controller {
         $this->output->set_output(json_encode($output));
     }
 
-/*    public function add_finance()
+    //Call from  AJAX to update attribute data
+    public function update_attribute_master()
+    {
+        $data['attributename'] = trim($this->input->post('attributename'));
+        $id = $this->input->post('attribute_id');
+        $this->load->model('mastersetting_model');
+        $this->mastersetting_model->update_attribute_master($data,$id);
+        $output['status']=1;
+        $this->output->set_output(json_encode($output));        
+    }
+   //Call from  AJAX to delete product data
+    public function delete_attribute_master()
+    {
+        $attribute_id = $this->input->post('attribute_id');
+        //print_r($product_id);die;
+        $this->load->model('mastersetting_model');
+        $this->mastersetting_model->delete_attribute_master($attribute_id);
+        $output['status']=1;
+        $this->output->set_output(json_encode($output));
+    }
+
+
+    //Call from  AJAX to block employee as per emp_id
+    public function block_employee_master()
+    {
+        $emp_id = $this->input->post('emp_id');
+        //print_r($emp_id);die;
+        $this->load->model('mastersetting_model');
+        $this->mastersetting_model->block_employee_master($emp_id);
+        $output['status']=1;
+        $this->output->set_output(json_encode($output));
+    }
+
+    //Call from  AJAX to update employee master as per empid
+    public function update_employee_master()
+    {
+        $emp_id = $this->input->post('emp_id');
+        $data['employeename'] = trim($this->input->post('employeename'));
+        $data['contact'] = trim($this->input->post('contact'));
+        $data['address'] = trim($this->input->post('address'));
+        $data['email'] = trim($this->input->post('email'));
+        //print_r($emp_id);die;
+        $this->load->model('mastersetting_model');
+        $this->mastersetting_model->update_employee_master($data,$emp_id);
+        $output['status']=1;
+        $this->output->set_output(json_encode($output));
+    }
+
+    //Call from  AJAX to block customer as per customerid
+    public function block_customer_master()
+    {
+        $cust_id = $this->input->post('cust_id');
+        //print_r($emp_id);die;
+        $this->load->model('mastersetting_model');
+        $this->mastersetting_model->block_customer_master($cust_id);
+        $output['status']=1;
+        $this->output->set_output(json_encode($output));
+    }
+
+    //Call from  AJAX to update customer master as per customerid
+    public function update_customer_master()
+    {
+        $cust_id = $this->input->post('cust_id');
+        $data['customername'] = trim($this->input->post('customername'));
+        $data['contact'] = trim($this->input->post('contact'));
+        $data['address'] = trim($this->input->post('address'));
+        $data['email'] = trim($this->input->post('email'));
+        //print_r($emp_id);die;
+        $this->load->model('mastersetting_model');
+        $this->mastersetting_model->update_customer_master($data,$cust_id);
+        $output['status']=1;
+        $this->output->set_output(json_encode($output));
+    }
+
+    /* public function add_finance()
     {
         $data['years'] = $this->input->post('inputFinance');
         $this->form_validation->set_data($data);
@@ -193,8 +292,6 @@ class Mastersetting extends CI_Controller {
             $this->output->set_output(json_encode(array('status'=>'0','message'=> $this->form_validation->get_error_as_array())));
         }
     }*/
-	  
-    // end of add product master
 
 
 }

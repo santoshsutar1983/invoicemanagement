@@ -143,6 +143,7 @@
             <li class="nav-item"><a href="<?php echo site_url('mastersetting/index') ?>" class="nav-link">Products Master</a></li>
             <li class="nav-item"><a href="<?php echo site_url('mastersetting/services_master_view') ?>" class="nav-link">Services Master</a></li>
             <li class="nav-item"><a href="<?php echo site_url('mastersetting/productservice_mapping_master_view') ?>" class="nav-link">Product-Service Mapping</a></li>
+            <li class="nav-item"><a href="<?php echo site_url('mastersetting/attributes_master_view') ?>" class="nav-link">Attributes Master</a></li>
             <li class="nav-item"><a href="<?php echo site_url('mastersetting/customer_master_view') ?>" class="nav-link">Customer Master</a></li>
             <li class="nav-item"><a href="<?php echo site_url('mastersetting/employee_master_view') ?>" class="nav-link">Employee Master</a></li>
             <li class="nav-item"><a href="<?php echo site_url('mastersetting/smstemplate_master_view') ?>" class="nav-link">SMS Template</a></li>

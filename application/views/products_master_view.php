@@ -43,10 +43,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            <div id="addproduct_msg"></div>
            
            <div class="table-wrapper">
-              <table id="pdatatable" class="table display responsive nowrap" width="70%">
+              <table id="pdatatable" class="table display responsive nowrap">
                 <thead>
                   <tr>
-                    <th class="wd-15p">Sr.No</th><th class="wd-15p">Product Name</th><th class="wd-15p">Action</th>
+                    <th class="wd-5p">Sr.No</th>
+                    <th class="wd-15p">Product Name</th>
+                    <th class="wd-15p">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -154,9 +156,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       if($(element).attr('data-action') === "show_gui")
       {
         var path= '<?php echo base_url();?>'
-        oldproductname = jQuery("#productname_" + uid).text();
+        oldproductname = $("#productname_" + uid).text();
         //olddesciption = jQuery("#productdesc_" + uid).text();
-        jQuery("#productname_" + uid).html("<input type='text' name='productnamenew_" + uid + "' id='productnamenew_" + uid + "' value='" + oldproductname + "' />");
+        $("#productname_" + uid).html("<input type='text' name='productnamenew_" + uid + "' id='productnamenew_" + uid + "' value='" + oldproductname + "' />");
         //jQuery("#productdesc_" + uid).html("<input type='text' name='productdescnew_" + uid + "' id='productdescnew_" + uid + "' value='" + olddesciption + "' />");
         $("#editimg_"+uid).attr('data-action','update_data');
         $("#editimg_"+uid).find('img').attr('src','<?php echo base_url("assets/img/save.png");?>');
@@ -165,7 +167,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       }
       else if($(element).attr('data-action') === "update_data")
       {
-        var productname_new=jQuery("#productnamenew_"+uid).val();
+        var productname_new=$("#productnamenew_"+uid).val();
         //var desc_new=jQuery("#productdescnew_"+uid).val();
         var path = $('#path').val();
         //make ajax call
@@ -181,7 +183,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       if(data.status == 1)
                       {
                         alert("Data updated successfully !");
-                        jQuery("#productname_" + uid).html(jQuery("#productnamenew_" + uid).val());
+                        $("#productname_" + uid).html(jQuery("#productnamenew_" + uid).val());
                         //jQuery("#productdesc_" + uid).html(jQuery("#productdescnew_" + uid).val());
                         $("#cancelimg_"+uid).html('');
                         $("#editimg_"+uid).attr('data-action','show_gui'); 
@@ -211,7 +213,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   {
    $("#productnamenew_" +uid).remove();
    //$("#productdescnew_"+uid).remove('');
-   jQuery("#productname_" + uid).html(oldproductname);
+   $("#productname_" + uid).html(oldproductname);
    //jQuery("#productdesc_" + uid).html(olddesciption);
    $("#cancelimg_"+uid).html('');
    $("#editimg_"+uid).attr('data-action','show_gui'); 

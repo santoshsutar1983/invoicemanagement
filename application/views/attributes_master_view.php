@@ -8,60 +8,55 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <div class="sh-breadcrumb">
         <nav class="breadcrumb">
           <a class="breadcrumb-item" href="#">Invoice Management System</a>
-          <span class="breadcrumb-item active">Services Master</span>
+          <span class="breadcrumb-item active">Attribute Master</span>
         </nav>
         <div id="path" value="<?php echo base_url(); ?>"></div>
       </div><!-- sh-breadcrumb -->
       
       <div class="sh-pagebody">
         <div class="card bd-primary mg-t-20">
-          <div class="card-header bg-primary tx-white">Services Master</div>
+          <div class="card-header bg-primary tx-white">Attribute Master</div>
           <div class="card-body pd-sm-30">
-           <form class="form-horizontal" id="form_servicemaster">
+           <form class="form-horizontal" id="form_attributemaster">
               <div class="form-group">
-                <label for="inputFinance" class="col-sm-2 control-label">Service Name:<span class="tx-danger">*</span></label>
-                  <div class="col-sm-5 input-group date">
-                  <input class="form-control pull-right" id="servicename" name="servicename" type="text" required>
+                <label for="inputFinance" class="col-sm-2 control-label">Attribute Name:<span class="tx-danger">*</span></label>
+                  <div class="col-sm-5 input-group">
+                  <input class="form-control pull-right" id="attributename" name="attributename" type="text" required>
                   </div>
-                  <div class="col-sm-5 input-group" id="service_msg"></div>
+                <div class="col-sm-5 input-group" id="attribute_msg"></div>
               </div>
-              <!-- <div class="form-group">
-                <label for="inputFinance" class="col-sm-2 control-label">Service Description:</label>
-                  <div class="col-sm-5 input-group date">
-                  <input class="form-control pull-right" id="servicedescription" name="servicedescription" type="text">
-                  </div>
-              </div> -->
-           
               <div class="form-group">
                 <div></div>
                 <div class="col-sm-5 col-sm-offset-2">
-                  <a href="javascript:void(0);" class="btn btn-success" onclick="submitMaster('form_servicemaster');"> Submit </a>
+                  <a href="javascript:void(0);" class="btn btn-success" onclick="submitMaster('form_attributemaster');">Submit</a>
                 </div>
               </div>
            </form>
-           <div id="addservice_msg"></div>
-
+           <div id="addattribute_msg"></div>
+           
            <div class="table-wrapper">
-              <table id="sdatatable" class="table display responsive nowrap">
+              <table id="adatatable" class="table display responsive nowrap">
                 <thead>
                   <tr>
-                    <th class="wd-5p">Sr.No</th><th class="wd-15p">Service Name</th><th class="wd-15p">Action</th>
+                    <th class="wd-5p">Sr.No</th>
+                    <th class="wd-15p">Attribute Name</th>
+                    <th class="wd-15p">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                 <?php 
                 $i=1;
-                foreach ($services as $s)
+                foreach ($attributes as $a)
                 { ?>
                  <tr>
                     <td><?php echo $i; ?></td>
-                    <td id='<?php echo "servicename_".$s['service_id'] ?>' data-original-value="<?php echo $s['servicename'] ?>"><?php echo $s['servicename'] ?></td>
-                    <td><a class="img-link" href="javascript:void(0);" data-action="show_gui" id='<?php echo "editimg_".$s['service_id'] ?>' onclick="editMaster(this,'serviceid',<?php echo $s['service_id'] ?>);">
+                    <td id='<?php echo "attributename_".$a['attribute_id'] ?>' data-original-value="<?php echo $a['attributename'] ?>"><?php echo $a['attributename'] ?></td>
+                    <td><a class="img-link" href="javascript:void(0);" data-action="show_gui" id='<?php echo "editimg_".$a['attribute_id'] ?>' onclick="editMaster(this,'attributeid',<?php echo $a['attribute_id'] ?>);">
                     <img src="<?php echo base_url(); ?>assets/img/edit.png" width="20" height="20"/></a>
-                     <a class="img-link" href="javascript:void(0);" id='<?php echo "deleteimg_".$s['service_id'] ?>' onclick="deleteMaster(this,'serviceid',<?php echo $s['service_id'] ?>);">
+                     <a class="img-link" href="javascript:void(0);" id='<?php echo "deleteimg_".$a['attribute_id'] ?>' onclick="deleteMaster(this,'attribute_d',<?php echo $a['attribute_id'] ?>);">
                     <img src="<?php echo base_url(); ?>assets/img/delete.png" width="20" height="20"/>
                      </a>
-                     <a class="img-link" href="javascript:void(0);" id='<?php echo "cancelimg_".$s['service_id'] ?>'>
+                     <a class="img-link" href="javascript:void(0);" id='<?php echo "cancelimg_".$a['attribute_id'] ?>'>
                      </a>
                     </td>
                   </tr>
@@ -76,20 +71,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
           </div><!-- card-body -->
         </div><!-- card -->
+
+        
       </div>
-    
       <div class="sh-footer">
         <div>Copyright &copy; 2017</div>
         <div class="mg-t-10 mg-md-t-0">Designed by: <a href="#">Prisms Communications</a></div>
       </div> 
       <!-- sh-footer -->
+     
     </div><!-- sh-mainpanel -->
 
   </body>
 <script type="text/javascript">
   $(document).ready(function(){
-      //$('.date-picker').datepicker("option", "dateFormat", "dd-mm-yy");
-      $('#sdatatable').DataTable({
+     // $('.date-picker').datepicker("option", "dateFormat", "dd-mm-yy");
+      $('#adatatable').DataTable({
           responsive: true,
           language: {
             searchPlaceholder: 'Search...',
@@ -102,44 +99,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     //validate
     var isValid = false;
     var actionName = '';
-    //alert(formId);
-    if(formId == 'form_servicemaster')
+    if(formId == 'form_attributemaster')
     {
-      isValid = isValidServiceMasterForm(); 
-      actionName = 'add_service_master';
+      isValid = isValidForm(); 
+      actionName = 'add_attribute_master';
     }
     if(isValid)
     {
-      //console.log("path",path);
-      //alert(path);
-      var servicename=$('#servicename').val();
+      var attributename=$('#attributename').val();
       $.ajax({
                 type:'POST',
-                url:'<?php echo base_url("index.php/mastersetting/add_service_master"); ?>',
-                data:{'servicename':  servicename},
+                url:'<?php echo base_url("index.php/mastersetting/add_attribute_master"); ?>',
+                data:{'attributename':  attributename},
                 success:function(data){
-                    $('#addservice_msg').removeClass('alert alert-danger mg-b-0');
-                    $('#addservice_msg').html('Data Inserted Successfully').addClass('alert alert-success');
-                    $('#servicename').val('');
-                    $('#servicedescription').val('');
+                    $('#addattribute_msg').removeClass('alert alert-danger mg-b-0');
+                    $('#addattribute_msg').html('Data Inserted Successfully').addClass('alert alert-success');
+                    $('#attributename').val('');
+                    
                 },
                 error : function(error)
                 {
-                    $('#addservice_msg').removeClass('alert alert-success');
-                    $('#addservice_msg').html('Error while Adding Data').addClass('alert alert-danger mg-b-0');
+                    $('#addattribute_msg').removeClass('alert alert-success');
+                    $('#addattribute_msg').html('Error while Adding Data').addClass('alert alert-danger mg-b-0');
                 }
             });
     }
   }
 
-  function isValidServiceMasterForm()
-  {   
-      $('#service_msg').html('');
-      if($('#servicename').val() == "")
+  function isValidForm()
+  {
+      $('#attribute_msg').html('');
+      if($('#attributename').val() == "")
       {
-        $('#service_msg').html('');
-        $('#service_msg').html('<div style="color:red" role="alert">Please Enter service Name</div>');
-        //alert("Please Enter Product Name");
+        $('#attribute_msg').html('');
+        $('#attribute_msg').html('<div style="color:red" role="alert">Please Enter attribute Name</div>');
         return false;
       }
       else
@@ -151,8 +144,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       if($(element).attr('data-action') === "show_gui")
       {
         var path= '<?php echo base_url();?>'
-        oldservicename = $("#servicename_" + uid).text();
-        $("#servicename_" + uid).html("<input type='text' name='servicenamenew_" + uid + "' id='servicenamenew_" + uid + "' value='" + oldservicename + "' />");
+        oldattributename = $("#attributename_" + uid).text();
+        $("#attributename_" + uid).html("<input type='text' name='attributenamenew_" + uid + "' id='attributenamenew_" + uid + "' value='" + oldattributename + "' />");
         $("#editimg_"+uid).attr('data-action','update_data');
         $("#editimg_"+uid).find('img').attr('src','<?php echo base_url("assets/img/save.png");?>');
         $("#cancelimg_"+uid).html('<a href="javascript:void(0);" onclick="cancelEdit(this,'+uid+');">'+'<img id="cancelimg_'+uid+'" src="'+path+'assets/img/cancel.ico" width="20" height="20"/>'+'</a>');
@@ -160,22 +153,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       }
       else if($(element).attr('data-action') === "update_data")
       {
-        var servicename_new=$("#servicenamenew_"+uid).val();
+        var attributename_new=$("#attributenamenew_"+uid).val();
         var path = $('#path').val();
         //make ajax call
-        var action = 'update_service_master';
-        if(servicename_new != '')
+        var action = 'update_attribute_master';
+        if(attributename_new != '')
         {
            $.ajax({
-                  url:'<?php echo base_url("index.php/mastersetting/update_service_master"); ?>',
+                  url:'<?php echo base_url("index.php/mastersetting/update_attribute_master"); ?>',
                   type:'POST',
-                  data : {servicename:servicename_new,service_id:uid},
+                  data : {attributename:attributename_new,attribute_id:uid},
                   dataType: 'JSON',
                   success : function(data){
                       if(data.status == 1)
                       {
                         alert("Data updated successfully !");
-                        $("#servicename_" + uid).html($("#servicenamenew_" + uid).val());
+                        $("#attributename_" + uid).html(jQuery("#attributenamenew_" + uid).val());
                         $("#cancelimg_"+uid).html('');
                         $("#editimg_"+uid).attr('data-action','show_gui'); 
                         $("#editimg_"+uid).find('img').attr('src','<?php echo base_url("assets/img/edit.png");?>');
@@ -202,10 +195,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
   function cancelEdit(element,uid)
   {
-   $("#servicenamenew_" +uid).remove();
-   //$("#productdescnew_"+uid).remove('');
-   $("#servicename_" + uid).html(oldservicename);
-   //jQuery("#productdesc_" + uid).html(olddesciption);
+   $("#attributenamenew_" +uid).remove();
+   $("#attributename_" + uid).html(oldattributename);
    $("#cancelimg_"+uid).html('');
    $("#editimg_"+uid).attr('data-action','show_gui'); 
    $("#editimg_"+uid).find('img').attr('src','<?php echo base_url("assets/img/edit.png");?>');
@@ -214,21 +205,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   function deleteMaster(element,formType,uid)
   {
     var path= '<?php echo base_url();?>'
-    servicename=$("#servicename_"+uid).data('original-value');
-    //alert(servicename);
-    var confirmation = confirm('Confirm to Delete '+ servicename + ' ? ');
+    attributename=$("#attributename_"+uid).data('original-value');
+    var confirmation = confirm('Confirm to Delete '+ attributename + ' ? ');
     if(confirmation == false)
       return;
-    var action = 'delete_service_master';
+    var action = 'delete_attribute_master';
     $.ajax({
-              url:'<?php echo base_url("index.php/mastersetting/delete_service_master"); ?>',
+              url:'<?php echo base_url("index.php/mastersetting/delete_attribute_master"); ?>',
               type:'POST',
-              data : {service_id:uid},
+              data : {attribute_id:uid},
               dataType: 'JSON',
               success : function(data){
                   if(data.status == 1)
                   {
-                    alert(servicename + " deleted successfully !");
+                    alert(attributename + " deleted successfully !");
                     $(element).closest('tr').remove();
                   }
                   else
@@ -248,6 +238,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         });
   }
 
-
 </script> 
+
 </html>

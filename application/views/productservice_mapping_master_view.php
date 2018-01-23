@@ -59,10 +59,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            <div id="addpsmapping_msg"></div>
 
            <div class="table-wrapper">
-              <table id="psdatatable" class="table display responsive nowrap" width="70%">
+              <table id="psdatatable" class="table display responsive nowrap">
                 <thead>
                   <tr>
-                    <th class="wd-15p">Sr.No</th><th class="wd-15p">Product Name</th><th class="wd-15p">Service Name</th><th class="wd-15p">Action</th>
+                    <th class="wd-5p">Sr.No</th><th class="wd-15p">Product Name</th><th class="wd-15p">Service Name</th><th class="wd-15p">Action</th>
                   </tr>
                 </thead>
                 <tbody>
