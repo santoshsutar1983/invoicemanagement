@@ -27,7 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <?php foreach ($products as $p)
                  { 
                 ?>
-                  <option value="<?php echo $p['id'] ?>"><?php echo $p['productname'] ?></option>
+                  <option value="<?php echo $p['product_id'] ?>"><?php echo $p['productname'] ?></option>
                  <?php 
                  } 
                  ?>
@@ -41,7 +41,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <?php foreach($services as $s)
                  { 
                 ?>
-                  <option value="<?php echo $s['id'] ?>"><?php echo $s['servicename'] ?></option>
+                  <option value="<?php echo $s['service_id'] ?>"><?php echo $s['servicename'] ?></option>
                  <?php 
                  } 
                  ?>

@@ -63,16 +63,11 @@ class mastersetting_model extends CI_Model{
     // function to get product service mapping data from service_master tbl
 	function get_psmapping() 
 	{
-        //$this->db->select('*');
-		//$this->db->from('tbl_productservice_mapping');
-       // $query = $this->db->get();
-        //print_r($query);die;
-
-        $this->db->select('psm.psmap_id,psm.productid,psm.serviceid,p.productname,s.servicename', false);
-		$this->db->from('tbl_productservice_mapping as psm');
-		$this->db->join('tbl_product_master as p', 'psm.productid = p.product_id');
-	    $this->db->join('tbl_service_master as s', 'psm.productid = s.service_id');
-		$query = $this->db->get();
+        $this->db->select('psm.psmap_id,psm.productid,psm.serviceid,p.product_id,p.productname,s.service_id,s.servicename', false);
+		$this->db->from('tbl_productservice_mapping as psm ,tbl_product_master as p,tbl_service_master as s');
+		$where = "psm.productid = p.product_id AND psm.serviceid = s.service_id";
+	    $this->db->where($where);
+	    $query = $this->db->get();
         return $query->result_array();
     }
     // function to get employees  data from employee master tbl
