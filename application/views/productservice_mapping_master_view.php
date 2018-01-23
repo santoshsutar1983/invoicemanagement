@@ -99,8 +99,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 success:function(data){
                     $('#addpsmapping_msg').removeClass('alert alert-danger mg-b-0');
                     $('#addpsmapping_msg').html('Data Inserted Successfully').addClass('alert alert-success');
-                    $('#selectproduct').val('');
-                    $('#selectservice').val('');
+                    $("select#selectproduct").val('');
+                    $("select#selectservice").val('');
                 },
                 error : function(error)
                 {

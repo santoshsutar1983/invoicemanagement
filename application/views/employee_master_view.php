@@ -8,27 +8,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <div class="sh-breadcrumb">
         <nav class="breadcrumb">
           <a class="breadcrumb-item" href="#">Invoice Management System</a>
-          <span class="breadcrumb-item active">Customer Master</span>
+          <span class="breadcrumb-item active">Employee Master</span>
         </nav>
         <div id="path" value="<?php echo base_url(); ?>"></div>
       </div><!-- sh-breadcrumb -->
       
       <div class="sh-pagebody">
         <div class="card bd-primary mg-t-20">
-          <div class="card-header bg-primary tx-white">Customer Master</div>
+          <div class="card-header bg-primary tx-white">Employee Master</div>
           <div class="card-body pd-sm-30">
-           <form class="form-horizontal" id="form_customermaster">
+           <form class="form-horizontal" id="form_employeemaster">
               <div class="form-group">
-                <label for="inputFname" class="col-sm-2 control-label">Name<span class="tx-danger">*</span></label>
+                <label for="inputFname" class="col-sm-2 control-label">Employee Name<span class="tx-danger">*</span></label>
                   <div class="col-sm-5 input-group">
-                  <input class="form-control pull-right" id="customername" name="customername" placeholder="Customer Name" type="text" required="required">
+                  <input class="form-control pull-right" id="employeename" name="employeename" type="text" placeholder="Employee Name">
                   </div>
-                <div class="col-sm-5 input-group" id="customername_msg"></div>
+                <div class="col-sm-5 input-group" id="employeename_msg"></div>
               </div>
               <div class="form-group">
                 <label for="inputContact" class="col-sm-2 control-label">Mobile<span class="tx-danger">*</span></label>
                   <div class="col-sm-5 input-group">
-                  <input class="form-control pull-right" onkeypress="return isNumberKey(event)" id="contact" name="contact" type="text" maxlength="10" required>
+                  <input class="form-control pull-right" onkeypress="return isNumberKey(event)" maxlength="10" id="contact" name="contact" type="text" required>
                   </div>
                 <div class="col-sm-5 input-group" id="contact_msg"></div>
               </div>
@@ -50,11 +50,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <div class="form-group">
                 <div></div>
                 <div class="col-sm-5 col-sm-offset-2">
-                  <a href="javascript:void(0);" class="btn btn-success" onclick="submitMaster('form_customermaster');"> Submit </a>
+                  <a href="javascript:void(0);" class="btn btn-success" onclick="submitMaster('form_employeemaster');"> Submit </a>
                 </div>
               </div>
            </form>
-           <div class="col-sm-5 input-group" id="addcustomer_msg"></div>
+           <div class="col-sm-5 input-group" id="addemployee_msg"></div>
           </div><!-- card-body -->
         </div><!-- card -->
       </div>
@@ -76,26 +76,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     var isValid = false;
     var actionName = '';
     //alert(formId);
-    if(formId == 'form_customermaster')
+    if(formId == 'form_employeemaster')
     {
       isValid = isValidForm(); 
-      actionName = 'add_customermaster';
+      actionName = 'add_employee_master';
     }
     if(isValid)
     {
-      var customefname=$('#customefname').val();
+      var employeename=$('#employeename').val();
       var contact=$('#contact').val();
       var address=$('#address').val();
       var email=$('#email').val();
-      //alert(productname);
       $.ajax({
                 type:'POST',
-                url:'<?php echo base_url("index.php/mastersetting/add_customer_master"); ?>',
-                data:{'customername':customername,'contact':contact,'address':address,'email':email},
+                url:'<?php echo base_url("index.php/mastersetting/add_employee_master"); ?>',
+                data:{'employeename':employeename,'contact':contact,'address':address,'email':email},
                 success:function(data){
-                    $('#addcustomer_msg').removeClass('alert alert-danger mg-b-0');
-                    $('#addcustomer_msg').html('Data Inserted Successfully').addClass('alert alert-success');
-                    $('#customername').val('');
+                    $('#addemployee_msg').removeClass('alert alert-danger mg-b-0');
+                    $('#addemployee_msg').html('Data Inserted Successfully').addClass('alert alert-success');
+                    $('#employeename').val('');
                     $('#contact').val('');
                     $('#address').val('');
                     $('#email').val('');
@@ -103,8 +102,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 },
                 error : function(error)
                 {
-                    $('#addcustomer_msg').removeClass('alert alert-success');
-                    $('#addcustomer_msg').html('Error while Adding Data').addClass('alert alert-danger mg-b-0');
+                    $('#addemployee_msg').removeClass('alert alert-success');
+                    $('#addemployee_msg').html('Error while Adding Data').addClass('alert alert-danger mg-b-0');
                 }
             });
     }
@@ -112,27 +111,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
   function isValidForm()
   {
-    $('#customename_msg').html('');
+    $('#employeename_msg').html('');
     $('#contact_msg').html('');
     $('#address_msg').html('');
     $('#email_msg').html('');
     var emailid=$('#email').val();
-    if($('#customername').val() == "")
+    if($('#employeename').val() == "")
       {
-        $('#customername_msg').html('');
-        $('#customername_msg').html('<div style="color:red" role="alert">Please Enter Customer Name</div>');
+        $('#employeename_msg').html('');
+        $('#employeename_msg').html('<div style="color:red" role="alert">Please Enter Employee Name</div>');
         return false;
       }
       else if($('#contact').val() == "")
       {
         $('#contact_msg').html('');
-        $('#contact_msg').html('<div style="color:red" role="alert">Please Enter Customer Contact</div>');
+        $('#contact_msg').html('<div style="color:red" role="alert">Please Enter Employee Contact</div>');
         return false;
       }
       else if($('#address').val() == "")
       {
         $('#address_msg').html('');
-        $('#address_msg').html('<div style="color:red" role="alert">Please Enter Customer Address</div>');
+        $('#address_msg').html('<div style="color:red" role="alert">Please Enter Employee Address</div>');
         return false;
       }
       else if($('#email').val()!="")
@@ -152,7 +151,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       else
         return true;
   }
-
+  
   function isNumberKey(evt)
   {
     var charCode = (evt.which) ? evt.which : event.keyCode;
