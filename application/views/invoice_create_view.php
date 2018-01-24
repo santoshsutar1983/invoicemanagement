@@ -46,11 +46,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <label class="tx-uppercase tx-13 tx-bold mg-b-20">Invoice Information</label>
                 <p class="d-flex justify-content-between mg-b-5">
                   <span>Invoice No</span>
-                  <span>GHT-673-00</span>
+                  <span><input  id="invoicenumber" name="invoicenumber" type="text"></span>
                 </p>
                 <p class="d-flex justify-content-between mg-b-5">
                   <span>Issue Date:</span>
-                  <span>November 21, 2017</span>
+                  <span><input  id="invoicedate" name="invoicedate" type="text"></span>
                 </p>
                 </div><!-- col -->
             </div><!-- row -->
@@ -90,7 +90,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <input  id="unitprice_0" name="unitprice_0" onkeyup="return calc(this)" type="number" value="0">
                     </td>
                     <td class="tx-right">
-                    <input  id="amount_0"  class="amount" onblur="return totalIt(this)" name="amount_0" type="number" value="0">
+                    <input  id="amount_0" readonly="readonly"  class="amount" onblur="return totalIt(this)" name="amount_0" type="number" value="0">
                     </td>
                   </tr>
                   <tr id="beforeaddmoreproduct">
@@ -120,12 +120,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <tr>
                   <td class="tx-right">Tax(%)</td>
                     <td colspan="2"  class="tx-right">
-                      <input  id="tax" name="tax" type="number">
+                      <input  id="tax" name="tax" value="0" type="number">
                     </td>
                   </tr>
                   <tr>
                     <td class="tx-right tx-uppercase tx-bold tx-inverse">Total Amount</td>
-                    <td colspan="2" class="tx-right"><h4 class="tx-primary tx-bold tx-lato"><input id="totalamount" name="totalamount" value="0" type="number"></h4></td>
+                    <td colspan="2" class="tx-right"><h4 class="tx-primary tx-bold tx-lato"><input id="totalamount" readonly="readonly"  name="totalamount" value="0" type="number"></h4></td>
                   </tr>
                 </tbody>
               </table>
@@ -183,7 +183,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <input  id="unitprice_'+FieldCount+'"  onkeyup="return calc(this)"  name="unitprice_'+FieldCount+'" type="number">\
                     </td>\
                     <td class="tx-right">\
-                    <input  id="amount_'+FieldCount+'" class="amount" onblur="return totalIt(this)" name="amount_'+FieldCount+'" type="number">\
+                    <input  id="amount_'+FieldCount+'" readonly="readonly" class="amount" onblur="return totalIt(this)" name="amount_'+FieldCount+'" type="number">\
                     </td>\
                   </tr>').insertBefore("#beforeaddmoreproduct");
                // x++; //text box increment
