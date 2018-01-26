@@ -90,9 +90,9 @@ class invoice_model extends CI_Model{
   // function print invoice call from controller
   function printInvoice($invoiceno,$customerid) 
   { 
-    $this->db->select('*', false);
-    $this->db->from('tbl_invoice_details');
-    $where = "invoice_number = ".$invoiceno." AND customer_id = ".$customerid;
+    $this->db->select('id.invoice_id,id.invoice_number,id.invoice_remark,DATE_FORMAT(id.invoice_date, "%d-%m-%Y") as invoice_date,id.customer_id,id.quantity,id.unitprice,id.amount,id.product_id,id.tax_percent,id.total_amount,id.created_date,pd.productname,sd.servicename,cm.customername,cm.address,cm.contact,cm.email,ci.companyname', false);
+    $this->db->from('tbl_invoice_details as id,tbl_product_master as pd,tbl_service_master as sd,tbl_customer_master as cm,tbl_companyinfo_master as ci');
+    $where = "pd.product_id=id.product_id AND sd.service_id=id.service_id AND id.invoice_number = ".$invoiceno." AND id.customer_id = ".$customerid;
     //echo $where;die;
     $this->db->where($where);
     $query = $this->db->get();

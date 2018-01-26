@@ -445,34 +445,87 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           success:function(data)
           {
              var obj = $.parseJSON(data); 
-             var html="";
-             var htmlstr="<body>";
-             htmlstr+="<div>Invoice No:<br>Customer Name:<br>Date:</div>";
-             htmlstr+="<table style='width:80%'><th><td>Product</td><td>Service</td><td>Quantity</td><td>Price</td><td>Amount</td></th>";
+             invoiceobj=obj.invoiceinfo;
+             console.log(invoiceobj);
              if(obj.status == 1)
-                {
-                    invoiceobj=obj.invoiceinfo;
-                    console.log(invoiceobj);
-                    for(var i=0,len = obj.invoiceinfo.length;i<len;i++)
-                    {
-
-                     var pname=obj.invoiceinfo[i].product_id;
-                     var sname=obj.invoiceinfo[i].service_id;
-                     var quan=obj.invoiceinfo[i].quantity;
-                     var uprice=obj.invoiceinfo[i].unitprice;
-                     var amt=obj.invoiceinfo[i].amount;
-                     htmlstr+="<tr><td>"+pname+"</td><td>"+sname+"</td><td>"+quan+"</td><td>"+uprice+"</td><td>"+amt+"</td></tr>"
-                  
-                    }
-                }
-              htmlstr+="</table></body";
+             {
+             var htmlstr='<style>#invoice-POS{ box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5); padding:2mm; margin: 0 auto; width: 144mm; background: #FFF; ::selection {background: #f31544; color: #FFF;}::moz-selection background: #f31544; color: #FFF;}h1{  font-size: 1.5em;  color: #222;}h2{font-size: .9em;}h3{  font-size: 1.2em;  font-weight: 300;  line-height: 2em;}p{  font-size: .7em;  color: #666;  line-height: 1.2em;} #top, #mid,#bot{   border-bottom: 1px solid #EEE;}#top{min-height: 100px;}#mid{min-height: 80px;} #bot{ min-height: 50px;}#top .logo{   height: 60px;  width: 60px;  //background: url(http://michaeltruong.ca/images/logo1.png) no-repeat;  background-size: 60px 60px;}.clientlogo{  float: left;  height: 60px; width: 60px;  background: url(http://michaeltruong.ca/images/client.jpg) no-repeat;  background-size: 60px 60px;  border-radius: 50px;}.info{  display: block;  //float:left;  margin-left: 0;}.title{  float: right;}.title p{text-align: right;} table{  width: 100%;  border-collapse: collapse;}td{  //padding: 5px 0 5px 15px;  //border: 1px solid #EEE}.tabletitle{  //padding: 5px;  font-size: .5em;  background: #EEE;}.service{border-bottom: 1px solid #EEE;}.item{width: 24mm;}.itemtext{font-size: .5em;}#legalcopy{  margin-top: 5mm;}}</style>';
+             htmlstr+='<body>';
+             htmlstr+='<div id="invoice-POS">';
+                       for(var i=0,len = invoiceobj.length;i<len;i++)
+                       {
+                        var tamount=invoiceobj[i].total_amount;
+                        if(i==0)
+                        {   
+                        htmlstr+='<center id="top">\
+                          <div class="logo"><h1>INVOICE<h1></div>\
+                          <div class=""> \
+                            <h2>'+ invoiceobj[i].companyname+'</h2>\
+                          </div><!--End Info-->\
+                          <div class=""> \
+                            <h2>'+ invoiceobj[i].invoice_number+'</h2>\
+                            <h2>'+ invoiceobj[i].invoice_date+'</h2>\
+                          </div><!--End Info-->\
+                        </center><!--End InvoiceTop-->\
+                        \
+                        <div id="mid">\
+                          <div class="info">\
+                            <h2>Contact Info</h2>\
+                            <p> \
+                                Name :' + invoiceobj[i].customername+'<br>\
+                                Address : '+invoiceobj[i].address+'<br>\
+                                Contact   : '+invoiceobj[i].contact+'<br>\
+                                Email   : '+invoiceobj[i].email+'<br>\
+                            </p>\
+                          </div>\
+                        </div><!--End Invoice Mid-->';
+                         }// end of if
+                       }// end of for
+              htmlstr+='<div id="bot">\
+                  <div id="table">\
+                      <table>\
+                        <tr class="tabletitle">\
+                          <td class="item"><h2>Product</h2></td>\
+                          <td class="Hours"><h2>Service</h2></td>\
+                          <td class="Rate"><h2>Quantity</h2></td>\
+                          <td class="Rate"><h2>Price</h2></td>\
+                          <td class="Rate"><h2>Amount</h2></td>\
+                        </tr>';
+                        for(var i=0,len = obj.invoiceinfo.length;i<len;i++)
+                        {
+                          var pname=obj.invoiceinfo[i].productname;
+                          var sname=obj.invoiceinfo[i].servicename;
+                          var quan=obj.invoiceinfo[i].quantity;
+                          var uprice=obj.invoiceinfo[i].unitprice;
+                          var amt=obj.invoiceinfo[i].amount;
+                    htmlstr+='<tr class="service">\
+                          <td class="tableitem"><p class="itemtext">'+pname+'</p></td>\
+                          <td class="tableitem"><p class="itemtext">'+sname+'</p></td>\
+                          <td class="tableitem"><p class="itemtext">'+quan+'</p></td>\
+                          <td class="tableitem"><p class="itemtext">'+uprice+'</p></td>\
+                          <td class="tableitem"><p class="itemtext">'+amt+'</p></td>\
+                        </tr>';
+                         } 
+                    htmlstr+='<tr class="tabletitle">\
+                        <td></td><td></td><td></td>\
+                        <td class="Rate"><h2>Total Amount</h2></td>\
+                        <td class="payment"><h2>'+tamount+'</h2></td>\
+                      </tr>'; 
+                  htmlstr+='</table>\
+                    </div><!--End Table-->\
+                    <div id="legalcopy">\
+                      <p class="legal"></p>\
+                    </div>\
+                 </div><!--End InvoiceBot-->\
+              </div><!--End Invoice-->';
               //alert(msg);
               var newWin=window.open('Print-Window'); 
               newWin.document.open(); 
               newWin.document.write(htmlstr); 
               newWin.focus();
               newWin.print();
-              newWin.document.close();       
+              newWin.document.close();  
+              } // end of chk status   
           },
           error: function (msg){
            //someErrorFunction();
