@@ -314,6 +314,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           event.stopImmediatePropagation();
           //cnt = 0;
           var customerid=jQuery("#selectcustomer").val();
+          var invoiceno=jQuery("#invoicenumber").val();
          /* var branch=jQuery("#divlist_fc").val();
           var memberid=jQuery("#memberid").val();
           var nonmember=jQuery("#nonmebername").val();
@@ -348,6 +349,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               jQuery("#quantity").val("");
               jQuery("#total").val("");*/
               //return false;
+
+              printInvoice(invoiceno,customerid);
               },
               error:function(){
                 alert('Please try after sometime!!!');
@@ -431,6 +434,53 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       else
         return true;
   }
+ // function to print invoice after submit
+  function printInvoice(invoice_number,customer_no)
+  {
+    jQuery.ajax({
+          type: "POST",
+          url:'<?php echo base_url("index.php/invoice/printInvoice"); ?>',
+          data:{invoice_no:invoice_number,customer_id:customer_no},
+          //context: document.body,
+          success:function(data)
+          {
+             var obj = $.parseJSON(data); 
+             var html="";
+             var htmlstr="<body>";
+             htmlstr+="<div>Invoice No:<br>Customer Name:<br>Date:</div>";
+             htmlstr+="<table style='width:80%'><th><td>Product</td><td>Service</td><td>Quantity</td><td>Price</td><td>Amount</td></th>";
+             if(obj.status == 1)
+                {
+                    invoiceobj=obj.invoiceinfo;
+                    console.log(invoiceobj);
+                    for(var i=0,len = obj.invoiceinfo.length;i<len;i++)
+                    {
+
+                     var pname=obj.invoiceinfo[i].product_id;
+                     var sname=obj.invoiceinfo[i].service_id;
+                     var quan=obj.invoiceinfo[i].quantity;
+                     var uprice=obj.invoiceinfo[i].unitprice;
+                     var amt=obj.invoiceinfo[i].amount;
+                     htmlstr+="<tr><td>"+pname+"</td><td>"+sname+"</td><td>"+quan+"</td><td>"+uprice+"</td><td>"+amt+"</td></tr>"
+                  
+                    }
+                }
+              htmlstr+="</table></body";
+              //alert(msg);
+              var newWin=window.open('Print-Window'); 
+              newWin.document.open(); 
+              newWin.document.write(htmlstr); 
+              newWin.focus();
+              newWin.print();
+              newWin.document.close();       
+          },
+          error: function (msg){
+           //someErrorFunction();
+           alert('Please try after sometime!!!');
+          }
+        });
+    //alert('Recepeit  will be available soon.');
+}
 
 </script> 
 

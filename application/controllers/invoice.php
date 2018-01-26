@@ -49,12 +49,23 @@ class Invoice extends CI_Controller {
         // Call to submit invoice detail for generate first Load Model
         $datapost = $this->input->post('data');
         $this->load->model('invoice_model');
-        $data['invoiceinfo'] = $this->invoice_model->submit_invoice_generate($datapost);
-        //print_r($data);die;
+        $this->invoice_model->submit_invoice_generate($datapost);
+        //print_r($data['invoiceinfo']);die;
         $data['status']=1;
         $this->output->set_output(json_encode($data));
       
     }
 
-    
+    //printInvoice function ajax call
+    public function printInvoice()
+    {
+        $invoiceno = $this->input->post('invoice_no');
+        $customerid = $this->input->post('customer_id');
+        $this->load->model('invoice_model');
+        $data['invoiceinfo']=$this->invoice_model->printInvoice($invoiceno,$customerid);
+        //print_r($data['invoiceinfo']);die;
+        $data['status']=1;
+        $this->output->set_output(json_encode($data));
+      
+    }
 }

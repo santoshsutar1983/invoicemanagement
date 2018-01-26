@@ -42,7 +42,7 @@ class invoice_model extends CI_Model{
 	    $this->db->where($where);
 	    $query = $this->db->get();
         return $query->result_array();
-    }
+  }
 
    // function to submit invoice information to generate
   function submit_invoice_generate($data) 
@@ -74,7 +74,29 @@ class invoice_model extends CI_Model{
             $this->db->query($query);
             }
 
+            //echo $this->db->affected_rows();die;
+            if($this->db->affected_rows()>0)
+            {
+              //$this->db->where('variable','invoice_lastno');
+              $query="UPDATE tbl_common_setting SET `value`=$invoicenumber WHERE `variable`='invoice_lastno'";
+              $this->db->query($query);
+           }
+
+        // update last invoice number
+
         //increment invoice number after insert data
+    }
+
+  // function print invoice call from controller
+  function printInvoice($invoiceno,$customerid) 
+  { 
+    $this->db->select('*', false);
+    $this->db->from('tbl_invoice_details');
+    $where = "invoice_number = ".$invoiceno." AND customer_id = ".$customerid;
+    //echo $where;die;
+    $this->db->where($where);
+    $query = $this->db->get();
+    return $query->result_array();
     }
 
 }
