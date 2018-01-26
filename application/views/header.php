@@ -63,21 +63,9 @@
             <i class="icon ion-ios-bookmarks-outline"></i>
             <span>Invoice</span>
           </a>
-          <!-- <ul class="nav-sub">
-            <li class="nav-item"><a href="blank.html" class="nav-link">Add Masters</a></li>
-            <li class="nav-item"><a href="blank.html" class="nav-link">Masters List</a></li>
-            <li class="nav-item"><a href="page-mailbox.html" class="nav-link">Mailbox</a></li>
-            <li class="nav-item"><a href="page-chat.html" class="nav-link">Chat Page</a></li>
-            <li class="nav-item"><a href="page-calendar.html" class="nav-link">Calendar</a></li>
-            <li class="nav-item"><a href="page-edit-profile.html" class="nav-link">Edit Profile</a></li>
-            <li class="nav-item"><a href="page-file-manager.html" class="nav-link">File Manager</a></li>
-            <li class="nav-item"><a href="page-invoice.html" class="nav-link">Invoice Page</a></li>
-            <li class="nav-item"><a href="page-forum-list.html" class="nav-link">Forum List Page</a></li>
-            <li class="nav-item"><a href="page-forum-topic.html" class="nav-link">Forum Topic View</a></li>
-            <li class="nav-item"><a href="page-signin.html" class="nav-link">Signin Page</a></li>
-            <li class="nav-item"><a href="page-signup.html" class="nav-link">Signup Page</a></li>
-            <li class="nav-item"><a href="page-notfound.html" class="nav-link">404 Page Not Found</a></li>
-          </ul> -->
+           <ul class="nav-sub">
+            <li class="nav-item"><a href="<?php echo site_url('invoice/index') ?>"" class="nav-link">Generate Invoice</a></li>
+           </ul> 
         </li><!-- nav-item -->
         
         <li class="nav-item">

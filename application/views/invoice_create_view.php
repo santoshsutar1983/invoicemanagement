@@ -14,8 +14,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div><!-- sh-breadcrumb -->
       
       <div class="sh-pagebody">
-        
-           <div class="card bd-primary">
+         
+          <div class="card bd-primary">
+          <form id="myInvoice_cb" name="myInvoice_cb" enctype="multipart/form-data" method="post" method="post">
           <div class="card-body pd-30 pd-md-60">
             <div class="d-md-flex justify-content-between flex-row-reverse">
               <h1 class="mg-b-0 tx-uppercase tx-gray-400 tx-mont tx-bold">Invoice</h1>
@@ -31,31 +32,43 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <?php
               } 
               ?>
-
             </div><!-- d-flex -->
-
             <div class="row mg-t-20">
               <div class="col-md">
                 <label class="tx-uppercase tx-13 tx-bold mg-b-20">Billed To</label>
-                <h6 class="tx-inverse">Customer Name</h6>
-                <p class="lh-7">Customer Address <br>
-                Csutomer Contact: 324 445-4544<br>
-                Customer Email: youremail@companyname.com</p>
+                 <select class="custselect"  id="selectcustomer" name="selectcustomer">
+                    <option value="">Select Customer</option>\
+                    <?php foreach($customers as $c) 
+                     {
+                     ?>
+                     <option value="<?php echo $c['customer_id'] ?>"><?php echo $c['customername'] ?></option>
+                     <?php } ?>
+                     </select>
+                <h6 class="tx-inverse">Name:<span id="cname"></span></h6>
+                <p class="lh-7">Address:<span id="caddress"></span><br>
+                Contact:<span id="ccontact"></span><br>
+                Email:<span id="cemail"></p>
               </div><!-- col -->
               <div class="col-md">
                 <label class="tx-uppercase tx-13 tx-bold mg-b-20">Invoice Information</label>
                 <p class="d-flex justify-content-between mg-b-5">
                   <span>Invoice No</span>
-                  <span><input  id="invoicenumber" name="invoicenumber" type="text"></span>
+                  <?php foreach ($lastinvoiceno as $last) 
+                  { 
+                  ?>
+                  <span><input  id="invoicenumber" name="invoicenumber" value="<?php echo $last['value']+1 ?>"  type="text">
+                  </span>
+                  <?php }
+                  ?>
                 </p>
                 <p class="d-flex justify-content-between mg-b-5">
                   <span>Issue Date:</span>
-                  <span><input  id="invoicedate" name="invoicedate" type="text"></span>
+                  <span><input  id="invoicedate" class="date-picker" name="invoicedate" type="text"></span>
                 </p>
                 </div><!-- col -->
             </div><!-- row -->
-
             <div class="table-responsive mg-t-40">
+            <input type="hidden" id="rowcount" name="rowcount" value="1">
               <table id="invoicecreate_table" class="table">
                 <thead>
                   <tr>
@@ -69,28 +82,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <tbody>
                   <tr id="invoicerow_0">
                     <td>
-                     <select id="selectproduct_0" name="selectproduct_0">
-                       <option value="1">p1</option>
-                       <option value="2">p2</option>
-                       <option value="3">p3</option>
-                       <option value="4">p4</option>
+                    <select class="prodselect" id="selectproduct_0" name="selectproduct_0">
+                    <option value="">Select Product</option>\
+                    <?php foreach($products as $pr) 
+                     {
+                     ?>
+                     <option value="<?php echo $pr['product_id'] ?>"><?php echo $pr['productname'] ?></option>
+                     <?php } ?>
                      </select>
                     </td>
                     <td>
-                    <select id="selectservice_0" name="selectservice_0">
-                       <option value="1">s1</option>
-                       <option value="2">s2</option>
-                       <option value="3">s3</option>
-                       <option value="4">s4</option>
+                    <select class="servselect" id="selectservice_0" name="selectservice_0">
+                    <option value="">Select Service</option>\
+                     <?php foreach($services as $sr) 
+                     {
+                     ?>
+                     <option value="<?php echo $sr['service_id'] ?>"><?php echo $sr['servicename'] ?></option>
+                     <?php } ?>
                      </select></td>
                     <td class="tx-center">
-                    <input id="quantity_0" name="quatity_0" onkeyup="return calc(this)" type="number" value="0">
+                    <input  id="quantity_0" name="quantity_0" onkeyup="return calc(this)" type="number" value="0" >
                     </td>
                     <td class="tx-right">
-                    <input  id="unitprice_0" name="unitprice_0" onkeyup="return calc(this)" type="number" value="0">
+                    <input  id="unitprice_0" name="unitprice_0" onkeyup="return calc(this)" type="number" value="0" >
                     </td>
                     <td class="tx-right">
-                    <input  id="amount_0" readonly="readonly"  class="amount" onblur="return totalIt(this)" name="amount_0" type="number" value="0">
+                    <input  id="amount_0" readonly="readonly"  class="amount" onblur="return totalIt(this)" name="amount_0" type="number" value="0" >
                     </td>
                   </tr>
                   <tr id="beforeaddmoreproduct">
@@ -103,10 +120,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <td class="tx-center">
                     </td>
                     <td class="tx-right">
-                    
                     </td>
                     <td class="tx-right">
-                    
                     </td>
                   </tr>
                   <tr>
@@ -132,15 +147,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div><!-- table-responsive -->
 
             <hr class="mg-b-60">
-
-            <a href="" class="btn btn-primary btn-block">Generate Now</a>
-
           </div><!-- card-body -->
+          </form>
+          <input class="btn btn-primary btn-block" type="submit" value="Generate" id="invoice_submit" style="cursor: pointer;">
+          <!-- <a href="" class="btn btn-primary btn-block">Generate Now</a> -->
         </div><!-- card -->
-
-
       </div>
-
       <div class="sh-footer">
         <div>Copyright &copy; 2017</div>
         <div class="mg-t-10 mg-md-t-0">Designed by: <a href="#">Prisms Communications</a></div>
@@ -154,7 +166,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   $(document).ready(function()
     {  // start of document ready function
 
-      // $('.date-picker').datepicker("option", "dateFormat", "dd-mm-yy");
+      $('.date-picker').datepicker({
+        dateFormat: 'dd-mm-yy'
+        });
+      $('#invoicedate').datepicker('setDate', 'today');
+      $(".prodselect").select2();
+      $(".servselect").select2();
+      $(".custselect").select2();
       path='<?php echo base_url();?>'
       // script to add new product rows after plus click
       var FieldCount = 0;//to keep track of fileds added
@@ -162,32 +180,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       $("#invoicecreate_table").on('click','.addmoreproduct',function()
       {
         FieldCount++; //text box added ncrement
-        $('<tr id="invoicerow"><td><select id="selectproduct_'+FieldCount+'" name="selectproduct_'+FieldCount+'"> \
-                       <option value="1">p1</option>\
-                       <option value="2">p2</option>\
-                       <option value="3">p3</option>\
-                       <option value="4">p4</option>\
+        $("#rowcount").val(FieldCount+1);
+        $('<tr id="invoicerow_'+FieldCount+'"><td><select class="prodselect" id="selectproduct_'+FieldCount+'" name="selectproduct_'+FieldCount+'"> \
+                      <option value="">Select Product</option>\
+                      <?php foreach ($products as $pr) { ?> \
+                      <option value="<?php echo $pr['product_id']?>"><?php echo $pr['productname']?></option>\
+                        <?php } ?>\
+                      </select>\
+                      </td>\
+                      <td>\
+                      <select class="servselect" id="selectservice_'+FieldCount+'" name="selectservice_'+FieldCount+'"> \
+                      <option value="">Select Service</option>\
+                      <?php foreach ($services as $sr) { ?> \
+                      <option value="<?php echo $sr['service_id']?>"><?php echo $sr['servicename']?></option>\
+                      <?php } ?>\
                      </select>\
-                    </td>\
-                    <td>\
-                    <select id="selectservice_'+FieldCount+'" name="selectservice_'+FieldCount+'">\
-                       <option value="1">s1</option>\
-                       <option value="2">s2</option>\
-                       <option value="3">s3</option>\
-                       <option value="4">s4</option>\
-                     </select></td>\
-                    <td class="tx-center">\
-                    <input id="quantity_'+FieldCount+'" onkeyup="return calc(this)"  name="quatity_'+FieldCount+'" type="number">\
-                    </td>\
-                    <td class="tx-right">\
-                    <input  id="unitprice_'+FieldCount+'"  onkeyup="return calc(this)"  name="unitprice_'+FieldCount+'" type="number">\
-                    </td>\
-                    <td class="tx-right">\
-                    <input  id="amount_'+FieldCount+'" readonly="readonly" class="amount" onblur="return totalIt(this)" name="amount_'+FieldCount+'" type="number">\
-                    </td>\
+                     </td>\
+                     <td class="tx-center">\
+                     <input id="quantity_'+FieldCount+'" onkeyup="return calc(this)"  name="quantity_'+FieldCount+'" value="0" type="number">\
+                      </td>\
+                      <td class="tx-right">\
+                     <input  id="unitprice_'+FieldCount+'"  onkeyup="return calc(this)"  name="unitprice_'+FieldCount+'" value="0" type="number">\
+                     </td>\
+                     <td class="tx-right">\
+                     <input  id="amount_'+FieldCount+'" readonly="readonly" class="amount" onblur="return totalIt(this)" name="amount_'+FieldCount+'" value="0" type="number">\
+                     </td>\
                   </tr>').insertBefore("#beforeaddmoreproduct");
                // x++; //text box increment
         $("#addmoreproduct").show();
+        $(".prodselect").select2();
+        $(".servselect").select2();
         //$('AddMoreFileBox').html("Add More Family Information");
        });
 
@@ -204,8 +226,135 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         // remove previous row and decrement field  count
         $(this).closest('tr').prev().remove();
         FieldCount--;
+        $("#rowcount").val($("#rowcount").val()-1);
       }) 
+  
+   // load services as per change in products
 
+   /*jQuery('.prodselect').change(function ()
+   {
+    var pid=this.value;
+    alert(pid);
+    if(pid=="")
+    {
+        alert("Please Select Product");
+        return false;
+    }
+    else
+    {
+      $.ajax({
+          type:"POST",
+          url:'<?php //echo base_url("index.php/invoice/get_service_byproduct"); ?>',
+          data: {product_id:pid},
+          success:function(msg){  
+              alert(msg);
+              var obj = $.parseJSON(msg); 
+              var selectdivs = '';
+              selectdivs += "<option value=''>Select Service</option>";
+              obj.forEach(function(entry) {
+                      selectdivs += "<option value='"+entry['service_id']+"'>"+entry['servicename']+"</option>";
+                  }); 
+              //jQuery('#classl').html("");
+              //jQuery('#classl').append(selectdivs);
+          },
+          error: function (msg){
+              //jQuery("#"+divid).hide();
+              alert('Please try after sometime!!!');
+          }
+      });// end of jquery ajax
+    }// end of if else
+   });// end of prodselect change event*/
+
+   // load customer info 
+   jQuery('#selectcustomer').change(function ()
+   {
+    var cid=this.value;
+    //alert(cid);
+    if(cid=="")
+    {
+        alert("Please Select Customer");
+        return false;
+    }
+    else
+    {
+      $.ajax({
+          type:"POST",
+          url:'<?php echo base_url("index.php/invoice/get_customer_byid"); ?>',
+          data: {customer_id:cid},
+          success:function(data){  
+              var obj = $.parseJSON(data); 
+               if(obj.status == 1)
+                {
+                    custobj=obj.customers;
+                    console.log(custobj);
+                    for(var i=0,len = obj.customers.length;i<len;i++)
+                    {
+                     var customername=obj.customers[i].customername;
+                     var contact=obj.customers[i].contact;
+                     var address=obj.customers[i].address;
+                     var email=obj.customers[i].email;
+                     $('#cname').html(customername);
+                     $('#caddress').html(contact);
+                     $('#ccontact').html(address);
+                     $('#cemail').html(email);
+                    }
+                }
+          },
+          error: function (data){
+              //jQuery("#"+divid).hide();
+              alert('Please try after sometime!!!');
+          }
+      });// end of jquery ajax
+    }// end of if else
+   });// end of prodselect change event*/
+
+    //invoice form submit
+     $("#invoice_submit").on("click", function(event) {
+   
+          event.stopImmediatePropagation();
+          //cnt = 0;
+          var customerid=jQuery("#selectcustomer").val();
+         /* var branch=jQuery("#divlist_fc").val();
+          var memberid=jQuery("#memberid").val();
+          var nonmember=jQuery("#nonmebername").val();
+          var total=jQuery("#total").val();
+          var paid=jQuery("#paid").val();*/
+
+          if(customerid == "")
+          {
+            alert("Please Select Customer");
+            return false;
+          }
+
+          //alert($('#myInvoice_cb').serialize());
+          $.ajax
+          ({
+               url:'<?php echo base_url("index.php/invoice/submit_invoice_generate"); ?>',
+              type:'POST',
+              dataType:'json',
+              data:{data:jQuery('#myInvoice_cb').serialize()},
+              success:function(response)
+              {
+              //$('#invoice_submit')[0].reset();
+              //$("#form")[0].reset();
+              $(".removeLater").val(0);
+              //$("#myInvoice_cb").closest('form').find("input[type=text]").val("");
+              //alert(response);
+             /* var baseUrl=' <?php //echo JURI::current();?>';
+              window.location.href= baseUrl + '?acadid='+response[1]+'&userid='+response[0]+'&receipt='+response[2]+'&counter='+response[4]+'&openprint=getPrint';
+              //jQuery("#myForm_cb")[0].reset();
+              jQuery("#salerate").val("");
+              jQuery("#paid").val("");
+              jQuery("#quantity").val("");
+              jQuery("#total").val("");*/
+              //return false;
+              },
+              error:function(){
+                alert('Please try after sometime!!!');
+              }
+             });
+
+       }); //end of invoice submit function     
      
   }); // end of document ready function
 
