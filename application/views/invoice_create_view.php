@@ -449,77 +449,136 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              console.log(invoiceobj);
              if(obj.status == 1)
              {
-             var htmlstr='<style>#invoice-POS { box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5); padding:2mm; margin: 0 auto; width: 144mm; background: #FFF; ::selection {background: #f31544; color: #FFF;}::moz-selection background: #f31544; color: #FFF;}h1{  font-size: 1.5em;  color: #222;}h2{font-size: .9em;}h3{  font-size: 1.2em;  font-weight: 300;  line-height: 2em;}p{  font-size: .7em;  color: #666;  line-height: 1.2em;} #top, #mid,#bot{   border-bottom: 1px solid #EEE;}#top{height: 30px;}#mid{min-height: 80px;} #bot{ min-height: 50px;}#top .logo{   height: 60px;  width: 60px;  //background: url(http://michaeltruong.ca/images/logo1.png) no-repeat;  background-size: 60px 60px;}.clientlogo{  float: left;  height: 60px; width: 60px;  background: url(http://michaeltruong.ca/images/client.jpg) no-repeat;  background-size: 60px 60px;  border-radius: 50px;}.info{  display: block;  //float:left;  margin-left: 0;}.title{  float: right;}.title p{text-align: right;} table{  width: 100%;  border-collapse: collapse;}td{  //padding: 5px 0 5px 15px;  //border: 1px solid #EEE}.tabletitle{  //padding: 5px;  font-size: .5em;  background: #EEE;}.service{border-bottom: 1px solid #EEE;}.item{width: 24mm;}.itemtext{font-size: .5em;}#legalcopy{  margin-top: 5mm;}}</style>';
-             htmlstr+='<body>';
-             htmlstr+='<div id="invoice-POS">';
-                       for(var i=0,len = invoiceobj.length;i<len;i++)
-                       {
-                        var tamount=invoiceobj[i].total_amount;
-                        if(i==0)
-                        {   
-                        htmlstr+='<center id="top">\
-                          <div class="logo"><h1>INVOICE<h1></div>\
-                          <div class=""> \
-                            <h2>'+ invoiceobj[i].companyname+'</h2>\
-                          </div><!--End Info-->\
-                          <div class=""> \
-                            <h2>'+ invoiceobj[i].invoice_number+'</h2>\
-                            <h2>'+ invoiceobj[i].invoice_date+'</h2>\
-                          </div><!--End Info-->\
-                        </center><!--End InvoiceTop-->\
-                        \
-                        <div id="mid">\
-                          <div class="info">\
-                            <h2>Contact Info</h2>\
-                            <p> \
-                                Name :' + invoiceobj[i].customername+'<br>\
-                                Address : '+invoiceobj[i].address+'<br>\
-                                Contact   : '+invoiceobj[i].contact+'<br>\
-                                Email   : '+invoiceobj[i].email+'<br>\
-                            </p>\
-                          </div>\
-                        </div><!--End Invoice Mid-->';
-                         }// end of if
-                       }// end of for
-              htmlstr+='<div id="bot">\
-                  <div id="table">\
-                      <table>\
-                        <tr class="tabletitle">\
-                          <td class="item"><h2>Product</h2></td>\
-                          <td class="Hours"><h2>Service</h2></td>\
-                          <td class="Rate"><h2>Quantity</h2></td>\
-                          <td class="Rate"><h2>Price</h2></td>\
-                          <td class="Rate"><h2>Amount</h2></td>\
-                        </tr>';
-                        for(var i=0,len = obj.invoiceinfo.length;i<len;i++)
-                        {
-                          var pname=obj.invoiceinfo[i].productname;
-                          var sname=obj.invoiceinfo[i].servicename;
-                          var quan=obj.invoiceinfo[i].quantity;
-                          var uprice=obj.invoiceinfo[i].unitprice;
-                          var amt=obj.invoiceinfo[i].amount;
-                    htmlstr+='<tr class="service">\
-                          <td class="tableitem"><p class="itemtext">'+pname+'</p></td>\
-                          <td class="tableitem"><p class="itemtext">'+sname+'</p></td>\
-                          <td class="tableitem"><p class="itemtext">'+quan+'</p></td>\
-                          <td class="tableitem"><p class="itemtext">'+uprice+'</p></td>\
-                          <td class="tableitem"><p class="itemtext">'+amt+'</p></td>\
-                        </tr>';
-                         } 
-                    htmlstr+='<tr class="tabletitle">\
-                        <td></td><td></td><td></td>\
-                        <td class="Rate"><h2>Total Amount</h2></td>\
-                        <td class="payment"><h2>'+tamount+'</h2></td>\
-                      </tr>'; 
-                  htmlstr+='</table>\
-                    </div><!--End Table-->\
-                    <div id="legalcopy">\
-                      <p class="legal"></p>\
-                    </div>\
-                 </div><!--End InvoiceBot-->\
-              </div><!--End Invoice-->';
-              //alert(msg);
-              var newWin=window.open('Print-Window'); 
+             var htmlstr='<style>\
+             body{border: 1px solid;width:600px;height:400px;margin: auto;padding:5px;}\
+             .label_text {\
+                display: inline-block;\
+                font-weight: bold;\
+                margin: 0;\
+                width: 60%;\
+                font-size: 1em\
+                }\
+            .label_value \
+                {\
+                display: inline-block;\
+                text-align: right;\
+                width: 35%;\
+                font-size: 1em;\
+                text-decoration: underline\
+                }\
+                #div_alltotal {\
+                    width: 100%;\
+                    border-top: 0.2em solid;\
+                    border-top-style: outset;\
+                    border-bottom: 0.2em solid;\
+                    border-bottom-style: inset;\
+                    padding-bottom: 1%\
+                    }\
+                    #div_wrapper {\
+                        border: 0.2em solid;\
+                        -moz-border-radius: 1%;\
+                        -webkit-border-radius: 1%;\
+                        border-radius: 1%;\
+                        margin: 1%;\
+                        padding: 0.4em;\
+                        width: 45%;\
+                        font-family: "Arial Unicode MS"\
+                        }\
+                        #fcheader {\
+                            text-align: center\
+                            }\
+                        #fcheader b {\
+                            font-size: 18px\
+                            }\
+                        .headerfont {\
+                            border-top: 2px solid;\
+                            font-weight: bold;\
+                            text-align: center\
+                            }\
+                        #tbl_fcrcp {\
+                            padding: 2%;\
+                            width: 100%\
+                            }\
+                        #tbl_fcrcp th {\
+                            text-align: left\
+                            }\
+                        .amount {\
+                            display: block;\
+                            text-align: right;\
+                            width: 61px\
+                            }\
+                        #td_fcrcptotal {\
+                            font-size: 16px;\
+                            font-weight: bold;\
+                            text-align: center\
+                            }\
+                        #div_alltotal_main {\
+                            border-bottom: 1px solid;\
+                            height: 12%;\
+                            padding: 1% 1% 1.5%;\
+                            border-top: 0.2em solid;\
+                            border-top-style: outset\
+                            }\
+                        #div_alltotal_main > div {\
+                            float: left\
+                            }\
+                        #div_frcpsign {\
+                            border-top: \1px solid;\
+                            margin-top: 1em;\
+                            padding-right: 7%;\
+                            padding-top: 4%;\
+                            text-align: right\
+                            }\
+                        #div_frcpsignleft {\
+                              float:left;\
+                              padding:15px 15px 0 15px;\
+                            }\
+                        #div_frcpsignright {\
+                              float:right;\
+                              padding:15px 15px 0 15px;\
+                            }\
+                        #tbl_fcrcp td, th {\
+                            border-top: 1px solid\
+                            }\
+                            #div_fcnote {\
+                                font-size: 0.8em\
+                                }\
+                          #div_sdet {\
+                                display: inline-block;\
+                                width: 100%\
+                                }\
+             </style>';
+             var srno=1;
+             htmlstr+='<div class="headerfont">INVOICE</div>';
+             for(var i=0,len = invoiceobj.length;i<len;i++)
+             {
+              var tamount=invoiceobj[i].total_amount;
+                  if(i==0)
+                  { 
+                  htmlstr+='<div class="headerfont">'+ invoiceobj[i].companyname+'<br></div>';        
+                  htmlstr+='<div class="studDetailsClass"><span style="float:left;"></span><span style="float:right">Invoice No:'+ invoiceobj[i].invoice_number+ ' <br> Date:'+ invoiceobj[i].invoice_date+'</span></div><div class="studDetailsClass">' + invoiceobj[i].customername+'<br>'+invoiceobj[i].address+'<br>'+invoiceobj[i].contact+'<br>'+invoiceobj[i].email+' </span><span style="float:left;"></span><span style="float:right"></span></div><div class="studDetailsClass"><span style="float:left"><span style="float:right"></span></div>';
+                  }// end of if
+             }// end of for
+             htmlstr+='<table id="tbl_fcrcp"><tr><th>Sr.No.</th><th>Product</th><th>Serivce</th><th>Quantity</th><th>Price</th><th>Amount</th></tr><thead></thead><tbody>';
+             for(var i=0,len = obj.invoiceinfo.length;i<len;i++)
+              {
+                var pname=obj.invoiceinfo[i].productname;
+                var sname=obj.invoiceinfo[i].servicename;
+                var quan=obj.invoiceinfo[i].quantity;
+                var uprice=obj.invoiceinfo[i].unitprice;
+                var amt=obj.invoiceinfo[i].amount;
+               htmlstr+='<tr>\
+               <td>'+srno+'</td>\
+                <td>'+pname+'</td>\
+                <td>'+sname+'</td>\
+                <td>'+quan+'</td>\
+                <td>'+uprice+'</td>\
+                <td>'+amt+'</td>\
+              </tr>';srno++;
+              }
+            htmlstr+='<tr><td></td><td></td><td><td><td></td><td><strong>Total Amount<strong></td><td><strong>'+tamount+'<strong></td></tr></tbody></table><div id="div_fcnote"><b> </b></div><div id="div_frcpsign"></div></div>';
+             //alert(htmlstr);
+             var newWin=window.open('Print-Window'); 
               newWin.document.open(); 
               newWin.document.write(htmlstr); 
               newWin.focus();
