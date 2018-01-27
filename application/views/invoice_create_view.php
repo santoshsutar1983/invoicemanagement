@@ -82,7 +82,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <tbody>
                   <tr id="invoicerow_0">
                     <td>
-                    <select class="prodselect" id="selectproduct_0" name="selectproduct_0">
+                    <select class="prodselect" id="selectproduct_0" name="selectproduct_0" required>
                     <option value="">Select Product</option>\
                     <?php foreach($products as $pr) 
                      {
@@ -92,7 +92,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                      </select>
                     </td>
                     <td>
-                    <select class="servselect" id="selectservice_0" name="selectservice_0">
+                    <select class="servselect" id="selectservice_0" name="selectservice_0" required>
                     <option value="">Select Service</option>\
                      <?php foreach($services as $sr) 
                      {
@@ -101,13 +101,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                      <?php } ?>
                      </select></td>
                     <td class="tx-center">
-                    <input  id="quantity_0" class="resetfield" name="quantity_0" onkeyup="return calc(this)" type="number" value="0" >
+                    <input  id="quantity_0" class="resetfield" name="quantity_0" onkeyup="return calc(this)" type="number" required>
                     </td>
                     <td class="tx-right">
-                    <input  id="unitprice_0" class="resetfield" name="unitprice_0" onkeyup="return calc(this)" type="number" value="0" >
+                    <input  id="unitprice_0" class="resetfield" name="unitprice_0" onkeyup="return calc(this)" type="number" required>
                     </td>
                     <td class="tx-right">
-                    <input  id="amount_0" class="amount" onblur="return totalIt(this)"  name="amount_0" type="number" value="0" readonly="readonly"  >
+                    <input  id="amount_0" class="amount" onblur="return totalIt(this)"  name="amount_0" type="number"  readonly="readonly" required>
                     </td>
                   </tr>
                   <tr id="beforeaddmoreproduct">
@@ -181,7 +181,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       {
         FieldCount++; //text box added ncrement
         $("#rowcount").val(FieldCount+1);
-        $('<tr id="invoicerow_'+FieldCount+'"><td><select class="prodselect" id="selectproduct_'+FieldCount+'" name="selectproduct_'+FieldCount+'"> \
+        $('<tr id="invoicerow_'+FieldCount+'"><td><select class="prodselect" id="selectproduct_'+FieldCount+'" name="selectproduct_'+FieldCount+'" required>\
                       <option value="">Select Product</option>\
                       <?php foreach ($products as $pr) { ?> \
                       <option value="<?php echo $pr['product_id']?>"><?php echo $pr['productname']?></option>\
@@ -189,7 +189,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       </select>\
                       </td>\
                       <td>\
-                      <select class="servselect" id="selectservice_'+FieldCount+'" name="selectservice_'+FieldCount+'"> \
+                      <select class="servselect" id="selectservice_'+FieldCount+'" name="selectservice_'+FieldCount+'" required> \
                       <option value="">Select Service</option>\
                       <?php foreach ($services as $sr) { ?> \
                       <option value="<?php echo $sr['service_id']?>"><?php echo $sr['servicename']?></option>\
@@ -197,13 +197,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                      </select>\
                      </td>\
                      <td class="tx-center">\
-                     <input id="quantity_'+FieldCount+'" onkeyup="return calc(this)"  name="quantity_'+FieldCount+'" value="0" type="number">\
+                     <input id="quantity_'+FieldCount+'" onkeyup="return calc(this)"  name="quantity_'+FieldCount+'"  type="number" required>\
                       </td>\
                       <td class="tx-right">\
-                     <input  id="unitprice_'+FieldCount+'"  onkeyup="return calc(this)"  name="unitprice_'+FieldCount+'" value="0" type="number">\
+                     <input  id="unitprice_'+FieldCount+'"  onkeyup="return calc(this)"  name="unitprice_'+FieldCount+'"  type="number" required>\
                      </td>\
                      <td class="tx-right">\
-                     <input  id="amount_'+FieldCount+'"  class="amount" onblur="return totalIt(this)" name="amount_'+FieldCount+'" value="0" type="number" readonly="readonly">\
+                     <input  id="amount_'+FieldCount+'"  class="amount" onblur="return totalIt(this)" name="amount_'+FieldCount+'" type="number" readonly="readonly" required>\
                      </td>\
                   </tr>').insertBefore("#beforeaddmoreproduct");
                // x++; //text box increment
@@ -265,9 +265,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }// end of if else
    });// end of prodselect change event*/
 
+     
+   //validate form by id here
+   var form = $( "#myInvoice_cb" );
+   form.validate();
+
    // load customer info 
    jQuery('#selectcustomer').change(function ()
    {
+    //alert( "Valid: " + form.valid() );
     var cid=this.value;
     //alert(cid);
     if(cid=="")
@@ -308,6 +314,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }// end of if else
    });// end of prodselect change event*/
 
+  
     //invoice form submit
      $("#invoice_submit").on("click", function(event) {
    
@@ -315,19 +322,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           //cnt = 0;
           var customerid=jQuery("#selectcustomer").val();
           var invoiceno=jQuery("#invoicenumber").val();
-         /* var branch=jQuery("#divlist_fc").val();
-          var memberid=jQuery("#memberid").val();
-          var nonmember=jQuery("#nonmebername").val();
-          var total=jQuery("#total").val();
-          var paid=jQuery("#paid").val();*/
-
+          var totalamt=jQuery("#totalamount").val();
           if(customerid == "")
           {
             alert("Please Select Customer");
             return false;
           }
-
-          //alert($('#myInvoice_cb').serialize());
+          else if(totalamt<=0)
+          {
+            alert("Incorrect Total Amount");
+            return false;
+          }
+          if(form.valid())
+          {
           $.ajax
           ({
                url:'<?php echo base_url("index.php/invoice/submit_invoice_generate"); ?>',
@@ -338,7 +345,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               {
               //$('#invoice_submit')[0].reset();
               //$("#form")[0].reset();
-              $(".removeLater").val(0);
+              //$(".removeLater").val(0);
               //$("#myInvoice_cb").closest('form').find("input[type=text]").val("");
               //alert(response);
              /* var baseUrl=' <?php //echo JURI::current();?>';
@@ -349,14 +356,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               jQuery("#quantity").val("");
               jQuery("#total").val("");*/
               //return false;
-
               printInvoice(invoiceno,customerid);
               },
               error:function(){
                 alert('Please try after sometime!!!');
               }
              });
-
+          }// end of if form valid check
+          else
+          {
+            alert("All fields are required");
+            return false;
+          }
+    
        }); //end of invoice submit function     
      
   }); // end of document ready function
