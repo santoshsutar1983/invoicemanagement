@@ -108,7 +108,8 @@ class Mastersetting extends CI_Controller {
     public function add_productservice_mapping_master()
     {
         $data = array(
-        'productid' => $this->input->post('selectproduct'),'serviceid' => $this->input->post('selectservice'),
+        'productid' => $this->input->post('selectproduct'),
+        'serviceid' => $this->input->post('selectservice'),
         );
         $this->load->model('mastersetting_model');
         $query=$this->mastersetting_model->productserice_mapping_insert($data);

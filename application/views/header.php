@@ -93,13 +93,9 @@
             <i class="icon ion-ios-analytics-outline"></i>
             <span>HRM</span>
           </a>
-          <!-- <ul class="nav-sub">
-            <li class="nav-item"><a href="chart-morris.html" class="nav-link">Morris Charts</a></li>
-            <li class="nav-item"><a href="chart-flot.html" class="nav-link">Flot Charts</a></li>
-            <li class="nav-item"><a href="chart-chartjs.html" class="nav-link">Chart JS</a></li>
-            <li class="nav-item"><a href="chart-rickshaw.html" class="nav-link">Rickshaw</a></li>
-            <li class="nav-item"><a href="chart-sparkline.html" class="nav-link">Sparkline</a></li>
-          </ul> -->
+           <ul class="nav-sub">
+            <li class="nav-item"><a href="<?php echo site_url('employee/index') ?>" class="nav-link" class="nav-link">Emloyee Attendances</a></li>
+           </ul> 
         </li> <!-- nav-item -->
         <li class="nav-item">
           <a href="" class="nav-link with-sub">
@@ -144,7 +140,7 @@
             <span>Maintanance</span>
           </a>
           <ul class="nav-sub">
-            <li class="nav-item"><a href="form-elements.html" class="nav-link">Maintanance Log</a></li>
+            <li class="nav-item"><a href="<?php echo site_url('maintanance') ?>" class="nav-link">Maintanance Log</a></li>
           </ul>
         </li><!-- nav-item -->
 
