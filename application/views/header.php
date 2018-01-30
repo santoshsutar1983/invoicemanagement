@@ -73,20 +73,10 @@
             <i class="icon ion-ios-filing-outline"></i>
             <span>Payment</span>
           </a>
-          <!-- <ul class="nav-sub">
-            <li class="nav-item"><a href="accordion.html" class="nav-link">Accordion</a></li>
-            <li class="nav-item"><a href="alerts.html" class="nav-link">Alerts</a></li>
-            <li class="nav-item"><a href="buttons.html" class="nav-link">Buttons</a></li>
-            <li class="nav-item"><a href="cards.html" class="nav-link">Cards</a></li>
-            <li class="nav-item"><a href="icons.html" class="nav-link">Icons</a></li>
-            <li class="nav-item"><a href="modal.html" class="nav-link">Modal</a></li>
-            <li class="nav-item"><a href="navigation.html" class="nav-link">Navigation</a></li>
-            <li class="nav-item"><a href="pagination.html" class="nav-link">Pagination</a></li>
-            <li class="nav-item"><a href="popups.html" class="nav-link">Tooltip &amp; Popover</a></li>
-            <li class="nav-item"><a href="progress.html" class="nav-link">Progress</a></li>
-            <li class="nav-item"><a href="spinners.html" class="nav-link">Spinners</a></li>
-            <li class="nav-item"><a href="typography.html" class="nav-link">Typography</a></li>
-          </ul> -->
+           <ul class="nav-sub">
+            <li class="nav-item"><a href="<?php echo site_url('payment/index') ?>" class="nav-link">Payment</a></li>
+             
+          </ul> 
         </li> <!-- nav-item -->
          <li class="nav-item">
           <a href="" class="nav-link with-sub">
@@ -94,7 +84,7 @@
             <span>HRM</span>
           </a>
            <ul class="nav-sub">
-            <li class="nav-item"><a href="<?php echo site_url('employee/index') ?>" class="nav-link" class="nav-link">Emloyee Attendances</a></li>
+            <li class="nav-item"><a href="<?php echo site_url('employee/index') ?>" class="nav-link" class="nav-link">Employee Attendance</a></li>
            </ul> 
         </li> <!-- nav-item -->
         <li class="nav-item">

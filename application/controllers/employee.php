@@ -25,6 +25,18 @@ class Employee extends CI_Controller {
         $this->output->set_output(json_encode($data));
     }
 
+    public function getEmployeeAttendance()
+    {
+        $attendate = $this->input->post('attendate');
+        //print_r($presentemp);die;
+        $this->load->model('employee_model');
+        $data['attendlist']=$this->employee_model->getEmployeeAttendance($attendate);
+        $data['status']=1;
+        $this->output->set_output(json_encode($data));
+    }
+
+    
+
     
    
 
