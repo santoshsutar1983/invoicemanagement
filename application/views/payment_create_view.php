@@ -8,151 +8,81 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <div class="sh-breadcrumb">
         <nav class="breadcrumb">
           <a class="breadcrumb-item" href="#">Invoice Management System</a>
-          <span class="breadcrumb-item active">Create Invoice</span>
+          <span class="breadcrumb-item active">Payment</span>
         </nav>
         <div id="path" value="<?php echo base_url(); ?>"></div>
       </div><!-- sh-breadcrumb -->
       
       <div class="sh-pagebody">
-         
-          <div class="card bd-primary">
-          <form id="myInvoice_cb" name="myInvoice_cb" enctype="multipart/form-data" method="post" method="post">
-          <div class="card-body pd-30 pd-md-60">
-            <div class="d-md-flex justify-content-between flex-row-reverse">
-              <h1 class="mg-b-0 tx-uppercase tx-gray-400 tx-mont tx-bold">Invoice</h1>
-              <?php foreach ($companyinfo as $ci) 
-              { 
-              ?>
-              <div class="mg-t-25 mg-md-t-0">
-                <h6 class="tx-primary"><?php echo $ci['companyname']?></h6>
-                <p class="lh-7"><?php echo $ci['address']?><br>
-                <?php echo $ci['contact']?><br>
-                </p>
-              </div>
-              <?php
-              } 
-              ?>
-            </div><!-- d-flex -->
-            <div class="row mg-t-20">
-             <!-- <label class="tx-uppercase tx-13 tx-bold mg-b-20">Billed To</label> -->
-              <div class="col-md">
-                  <label for="inputCustomer">Search Customer Name,Contact</label><br>
-                
-                <select id="selectcustomer" name="selectcustomer" class="form-control select2-show-search" data-placeholder="Search Customer" required>
-                <option value="">Select Customer</option>
+      <div class="card bd-primary mg-t-20">   
+        <div class="card-header bg-primary tx-white">Invoice Payment</div>
+            <div class="card-body pd-sm-30">
+             <form class="form-horizontal" id="form_payment">
+               <div class="col-lg-4 mg-t-20 mg-lg-t-0">
+                <label for="inputInvoice">Search By Invoice No, Name, Contact</label>
+                <select id="searchinvoice" name="searchinvoice" class="form-control select2-show-search" data-placeholder="Search Invoice" required>
+                <option value="">Select Invoice</option>
                 </select>
-             </div><!-- col -->
-              <!-- 
-              <div class="col-md">
-                <h6 class="tx-inverse">Name:<span id="cname"></span></h6>
-                <p class="lh-7">Address:<span id="caddress"></span><br>
-                 Contact:<span id="ccontact"></span><br>
-                 Email:<span id="cemail"></p>
-              </div> -->
+              <div style="width:100%"  id="searchinvoice_msg"></div>
+              </div><!-- col-4 -->
+              <br>
+              <div class="form-group">
+                <label for="inputAmount" class="col-sm-2 control-label">Amount</label>
+                  <div class="col-sm-5 input-group" style="width:34%;">
+                  <input class="form-control pull-right" id="balanceamount" name="balanceamount" type="text" required> 
+                  </div>
+                <div class="col-sm-5 input-group" id="description_msg"></div>
+              </div>
+              <br>
+              
+              <div id="paymentoptions" class="table-responsive">
+                <table class="table mg-b-0" style="margin-left:2%;">
+                        <thead>
+                          <tr>
+                            <th>Pay Mode</th>
+                            <th id="paid">Paid</th>
+                            <th id="chqno">Chq/Card No</th>
+                            <th id="chqdate">Chq/Card Date</th>
+                            <th id="chqdate1"></th>
+                            <th id="bankname">Bank Name</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                           <td style="width:100px;"> <select style="width:100px" id="paymentmode_0" name="paymentmode_0" required>
+                          <option value="">Select Mode</option>
+                          <?php foreach ($paymodeinfo as $pm) { ?>
+                          <option value="<?php echo $pm['id'] ?>"><?php echo $pm['payment_mode'] ?></option>
+                          <?php } ?>
+                            </select>
+                            </td>
+                            <td><input class="form-control pull-right" id="paid_0" name="paid_0" type="text"></td>
+                            <td><input class="form-control pull-right" id="chqno_0" name="chqno_0" type="text"></td>
+                            <td><input class="form-control pull-right" id="chqdate_0" name="chqdate_0" type="text"></td>
+                            <td> <input class="form-control pull-right" id="bankname_0" name="bankname_0" type="text"></td>
+                          </tr> 
+                       </tbody>
+               </table>
+              </div>
 
-              <div class="col-md">
-                <label class="tx-uppercase tx-13 tx-bold mg-b-20">Invoice Information</label>
-                <p class="d-flex justify-content-between mg-b-5">
-                  <span>Invoice No</span>
-                  <?php foreach ($lastinvoiceno as $last) 
-                  { 
-                  ?>
-                  <span><input  id="invoicenumber" name="invoicenumber" value="<?php echo $last['value']+1 ?>" readonly="readonly" type="text">
-                  </span>
-                  <?php }
-                  ?>
-                </p>
-                <p class="d-flex justify-content-between mg-b-5">
-                  <span>Issue Date:</span>
-                  <span><input  id="invoicedate" readonly="readonly" class="date-picker" name="invoicedate" type="text"></span>
-                </p>
-                </div><!-- col -->
-            </div><!-- row -->
-            <div class="table-responsive mg-t-40">
-            <input type="hidden" id="rowcount" name="rowcount" value="1">
-              <table id="invoicecreate_table" class="table">
-                <thead>
-                  <tr>
-                    <th class="wd-20p">Product</th>
-                    <th class="wd-20p">Service</th>
-                    <th class="tx-center">QNTY</th>
-                    <th class="tx-right">Unit Price</th>
-                    <th class="tx-right">Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr id="invoicerow_0">
-                    <td>
-                    <select class="prodselect" id="selectproduct_0" name="selectproduct_0" required>
-                    <option value="">Select Product</option>\
-                    <?php foreach($products as $pr) 
-                     {
-                     ?>
-                     <option value="<?php echo $pr['product_id'] ?>"><?php echo $pr['productname'] ?></option>
-                     <?php } ?>
-                     </select>
-                    </td>
-                    <td>
-                    <select class="servselect" id="selectservice_0" name="selectservice_0" required>
-                    <option value="">Select Service</option>\
-                     <?php foreach($services as $sr) 
-                     {
-                     ?>
-                     <option value="<?php echo $sr['service_id'] ?>"><?php echo $sr['servicename'] ?></option>
-                     <?php } ?>
-                     </select></td>
-                    <td class="tx-center">
-                    <input  id="quantity_0" class="resetfield" name="quantity_0" onkeyup="return calc(this)" type="number" required>
-                    </td>
-                    <td class="tx-right">
-                    <input  id="unitprice_0" class="resetfield" name="unitprice_0" onkeyup="return calc(this)" type="number" required>
-                    </td>
-                    <td class="tx-right">
-                    <input  id="amount_0" class="amount" onblur="return totalIt(this)"  name="amount_0" type="number"  readonly="readonly" required>
-                    </td>
-                  </tr>
-                  <tr id="beforeaddmoreproduct">
-                    <td>
-                      <img  title="Add Product" id="addmoreproduct" class="addmoreproduct" width="30" height="30" src="<?php echo base_url()?>assets/img/plus.png" style="cursor: pointer;">
-                      <img  title="Remove Product" class="removemoreproduct" width="30" height="30" src="<?php echo base_url()?>assets/img/minus.png" style="cursor: pointer;">
-                    </td>
-                    <td>
-                    </td>
-                    <td class="tx-center">
-                    </td>
-                    <td class="tx-right">
-                    </td>
-                    <td class="tx-right">
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="2" rowspan="4" class="valign-middle">
-                      <div class="mg-r-20">
-                        <label class="tx-uppercase tx-13 tx-bold mg-b-10"></label>
-                        <p class="tx-13"></p>
-                        </div>
-                    </td>
-                  </tr>
-                  <tr>
-                  <td class="tx-right">Tax(%)</td>
-                    <td colspan="2"  class="tx-right">
-                      <input  id="tax" name="tax" value="0" type="number">
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="tx-right tx-uppercase tx-bold tx-inverse">Total Amount</td>
-                    <td colspan="2" class="tx-right"><h4 class="tx-primary tx-bold tx-lato"><input id="totalamount" readonly="readonly"  name="totalamount" value="0" type="number"></h4></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div><!-- table-responsive -->
+              <div class="form-group">
+                <div></div>
+                <div class="col-sm-5 col-sm-offset-2">
+                  <a href="javascript:void(0);" class="btn btn-success" onclick="submitMaster('form_maintanance');"> Submit </a>
+                </div>
+              </div>
+             
+             </form>
+            </div>
+        </div>
 
-            <hr class="mg-b-60">
-          </div><!-- card-body -->
-          </form>
-          <input class="btn btn-primary btn-block" type="submit" value="Generate" id="invoice_submit" style="cursor: pointer;">
+      </div><!-- card-body -->
+      </div><!--sh-pagebody-->
+     
+
+      <!-- <input class="btn btn-primary btn-block" type="submit" value="Generate" id="invoice_submit" style="cursor: pointer;"> -->
           <!-- <a href="" class="btn btn-primary btn-block">Generate Now</a> -->
-        </div><!-- card -->
+      </div><!-- card -->
       </div>
       <div class="sh-footer">
         <div>Copyright &copy; 2017</div>
@@ -166,9 +96,79 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script type="text/javascript">
   $(document).ready(function()
     {  // start of document ready function
-       var base = '<?php echo base_url() ?>'
-      // search of customer by name or contact
-      jQuery('#selectcustomer').select2
+
+           
+         $("#chqno").hide();
+         $("#chqdate").hide();
+         $("#chqdate1").hide();
+         $("#bankname").hide();
+         $("#chqno_0").hide();
+         $("#chqdate_0").hide();
+         $("#bankname_0").hide();
+
+      $('#paymentmode_0').on('change', function (e) 
+      {
+        var optionSelected = $("option:selected", this);
+        var valueSelected = this.value;
+        //alert(valueSelected);
+        if(valueSelected=='1')
+        {
+         $("#chqno_0").hide();
+         $("#chqdate_0").hide();
+         $("#bankname_0").hide();
+         $("#chqno").hide();
+         $("#chqdate").hide();
+         $("#bankname").hide();
+        }
+        else if(valueSelected=='2')
+        {
+         $("#chqno_0").show();
+         $("#chqdate_0").show();
+         $("#bankname_0").show();
+    
+         $("#chqdate1").hide();
+         $("#chqno").show();
+         $("#chqdate").show();
+         $("#bankname").show();
+        }
+        else if(valueSelected=='3')
+        {
+         $("#chqno_0").show();
+         $("#chqdate_0").hide();
+         $("#bankname_0").show();
+         
+         $("#chqdate1").show();
+         $("#chqno").show();
+         $("#chqdate").hide();
+         $("#bankname").show();
+        }
+        else if(valueSelected=='4')
+        {
+         $("#chqno_0").show();
+         $("#chqdate_0").show();
+         $("#bankname_0").show();
+     
+         $("#chqno").show();
+         $("#chqdate").show();
+         $("#bankname").show();
+          $("#chqdate1").hide();
+        }
+        else
+        {
+         $("#chqno_0").hide();
+         $("#chqdate_0").hide();
+         $("#bankname_0").hide();
+         $("#chqno").hide();
+         $("#chqdate").hide();
+         $("#bankname").hide();
+         $("#chqdate1").hide();
+        }
+    
+      });
+
+      var base = '<?php echo base_url() ?>'
+      // search of rcustomer by name or contact
+      /*jQuery('#searchcustomer').select2
       ({
         minimumInputLength: 3,
         formatInputTooShort: function (){
@@ -176,7 +176,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             },
         placeholder: 'Search Customer',
         ajax: {
-        url:  base+'index.php/invoice/get_allcustomer_byname',
+        url:  base+'index.php/payment/get_customer_byname',
+        dataType: 'json',
+        delay: 250,
+        processResults: function (data){
+        return {
+                results: data
+               };
+            },
+              cache: true
+              }
+      });*/
+
+      //search for invoice no by number name contact
+      jQuery('#searchinvoice').select2
+      ({
+        minimumInputLength: 1,
+        formatInputTooShort: function (){
+                return "Enter 1 Characters";
+            },
+        placeholder: 'Search Invoice',
+        ajax: {
+        url:  base+'index.php/payment/get_invoice_bynumber',
         dataType: 'json',
         delay: 250,
         processResults: function (data){
@@ -188,119 +209,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               }
       });
 
-
-      $('.date-picker').datepicker({
-        dateFormat: 'dd-mm-yy'
-        });
-      $('#invoicedate').datepicker('setDate', 'today');
-      $(".prodselect").select2();
-      $(".servselect").select2();
-      $(".custselect").select2();
-      path='<?php echo base_url();?>'
-      // script to add new product rows after plus click
-      var FieldCount = 0;//to keep track of fileds added
-      totalamount=0;
-      $("#invoicecreate_table").on('click','.addmoreproduct',function()
-      {
-        FieldCount++; //text box added ncrement
-        $("#rowcount").val(FieldCount+1);
-        $('<tr id="invoicerow_'+FieldCount+'"><td><select class="prodselect" id="selectproduct_'+FieldCount+'" name="selectproduct_'+FieldCount+'" required>\
-                      <option value="">Select Product</option>\
-                      <?php foreach ($products as $pr) { ?> \
-                      <option value="<?php echo $pr['product_id']?>"><?php echo $pr['productname']?></option>\
-                        <?php } ?>\
-                      </select>\
-                      </td>\
-                      <td>\
-                      <select class="servselect" id="selectservice_'+FieldCount+'" name="selectservice_'+FieldCount+'" required> \
-                      <option value="">Select Service</option>\
-                      <?php foreach ($services as $sr) { ?> \
-                      <option value="<?php echo $sr['service_id']?>"><?php echo $sr['servicename']?></option>\
-                      <?php } ?>\
-                     </select>\
-                     </td>\
-                     <td class="tx-center">\
-                     <input id="quantity_'+FieldCount+'" onkeyup="return calc(this)"  name="quantity_'+FieldCount+'"  type="number" required>\
-                      </td>\
-                      <td class="tx-right">\
-                     <input  id="unitprice_'+FieldCount+'"  onkeyup="return calc(this)"  name="unitprice_'+FieldCount+'"  type="number" required>\
-                     </td>\
-                     <td class="tx-right">\
-                     <input  id="amount_'+FieldCount+'"  class="amount" onblur="return totalIt(this)" name="amount_'+FieldCount+'" type="number" readonly="readonly" required>\
-                     </td>\
-                  </tr>').insertBefore("#beforeaddmoreproduct");
-               // x++; //text box increment
-        $("#addmoreproduct").show();
-        $(".prodselect").select2();
-        $(".servselect").select2();
-        //$('AddMoreFileBox').html("Add More Family Information");
-       });
-
-      // script to remove product row after minus click
-      $("#invoicecreate_table").on("click",".removemoreproduct", function()
-      { 
-        if(FieldCount==0)
-          return false;
-        var $row = $(this).closest("tr").prev();
-        var $preval = $row.find(".amount").val(); // Find the text
-        // set new value of total here after remove product
-        var newtotal= $("#totalamount").val()-$preval;
-        $("#totalamount").val(newtotal);
-        // remove previous row and decrement field  count
-        $(this).closest('tr').prev().remove();
-        FieldCount--;
-        $("#rowcount").val($("#rowcount").val()-1);
-      }) 
-  
-   // load services as per change in products
-
-   /*jQuery('.prodselect').change(function ()
-   {
-    var pid=this.value;
-    alert(pid);
-    if(pid=="")
-    {
-        alert("Please Select Product");
-        return false;
-    }
-    else
-    {
-      $.ajax({
-          type:"POST",
-          url:'<?php //echo base_url("index.php/invoice/get_service_byproduct"); ?>',
-          data: {product_id:pid},
-          success:function(msg){  
-              alert(msg);
-              var obj = $.parseJSON(msg); 
-              var selectdivs = '';
-              selectdivs += "<option value=''>Select Service</option>";
-              obj.forEach(function(entry) {
-                      selectdivs += "<option value='"+entry['service_id']+"'>"+entry['servicename']+"</option>";
-                  }); 
-              //jQuery('#classl').html("");
-              //jQuery('#classl').append(selectdivs);
-          },
-          error: function (msg){
-              //jQuery("#"+divid).hide();
-              alert('Please try after sometime!!!');
-          }
-      });// end of jquery ajax
-    }// end of if else
-   });// end of prodselect change event*/
-
-     
+    path='<?php echo base_url();?>'
+         
    //validate form by id here
-   var form = $( "#myInvoice_cb" );
-   form.validate();
+   //var form = $( "#myInvoice_cb" );
+   //form.validate();
 
    // load customer info 
-   jQuery('#selectcustomer').change(function ()
+   jQuery('#searchinvoice').change(function ()
    {
-    //alert("Hi");
     //alert( "Valid: " + form.valid() );
-    var cid=this.value;
+    //var selecteduser = jQuery("#membernamefrom option:selected").val();
+    var invoiceid=this.value;
     //alert(cid);
-    if(cid=="")
+    if(invoiceid=="")
     {
         alert("Please Select Customer");
         return false;
@@ -309,24 +231,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     {
       $.ajax({
           type:"POST",
-          url:'<?php echo base_url("index.php/invoice/get_customer_byid"); ?>',
-          data: {customer_id:cid},
+          url:'<?php echo base_url("index.php/payment/get_invoice_balanceamount"); ?>',
+          data: {invoice_number:invoiceid},
           success:function(data){  
               var obj = $.parseJSON(data); 
                if(obj.status == 1)
                 {
-                    custobj=obj.customers;
-                    console.log(custobj);
-                    for(var i=0,len = obj.customers.length;i<len;i++)
+                    balanceobj=obj.balanceinfo;
+                    console.log(balanceobj);
+                    for(var i=0,len = balanceobj.length;i<len;i++)
                     {
-                     var customername=obj.customers[i].customername;
-                     var contact=obj.customers[i].contact;
-                     var address=obj.customers[i].address;
-                     var email=obj.customers[i].email;
-                     /*$('#cname').html(customername);
-                     $('#caddress').html(contact);
-                     $('#ccontact').html(address);
-                     $('#cemail').html(email);*/
+                     var balance=balanceobj[i].balance;
+                     //alert(balance);
+                     $('#balanceamount').val(balance);
                     }
                 }
           },

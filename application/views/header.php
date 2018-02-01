@@ -39,6 +39,14 @@
 
     <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/validate-js/2.0.1/validate.js'></script> -->
     <script src='http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js'></script>
+    
+    <link rel='stylesheet' href='<?php echo base_url(); ?>/assets/lib/jquery.steps/jquery.steps.css'>
+
+    <script src='<?php echo base_url(); ?>/assets/lib/jquery.steps/jquery.steps.js ?>'></script>
+    <script src='<?php echo base_url(); ?>/assets/lib/jquery.steps/jquery.steps.js ?>'></script>
+
+ 
+   <!--  <script src="//netsh.pp.ua/upwork-demo/1/js/typeahead.js"></script> -->
 
 
 </head>

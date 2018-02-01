@@ -12,13 +12,12 @@ class invoice_model extends CI_Model{
   }
   public function get_lastinvoice_number()
   {
-  	
-  	$this->db->select('value');
-	$this->db->from('tbl_common_setting');
-	$where = "variable='invoice_lastno'";
-	$this->db->where($where);
-  	$query= $this->db->get();
-  	return $query->result_array();
+    $this->db->select('value');
+  	$this->db->from('tbl_common_setting');
+  	$where = "variable='invoice_lastno'";
+  	$this->db->where($where);
+    $query= $this->db->get();
+    return $query->result_array();
   }
 
   // function to service as per product id AJAX call
@@ -38,10 +37,13 @@ class invoice_model extends CI_Model{
 		$this->db->select('*', false);
 		$this->db->from('tbl_customer_master');
 		$where = "status='1' AND customer_id = ".$customer_id;
-		//echo $where;die;
-	    $this->db->where($where);
-	    $query = $this->db->get();
-        return $query->result_array();
+    //echo $where;die;
+    //$query="SELECT * FROM tbl_customer_master WHERE status='1' AND customer_id='$customer_id'";
+	  $this->db->where($where);
+	  $query = $this->db->get();
+    //print_r($query);die;
+    //$query = $this->db->query($query);;
+    return $query->result_array();
   }
 
    // function to submit invoice information to generate
@@ -106,6 +108,19 @@ class invoice_model extends CI_Model{
       where id.invoice_number = '.$invoiceno.' AND id.customer_id = '.$customerid);
     return $query->result_array();
     }
+
+    //function to search customer by name or number
+  function get_allcustomer_byname($search) 
+  { 
+    $query="SELECT a.customer_id as id ,a.customername,a.contact, 
+    UPPER(CONCAT(a.customername,':',a.contact)) as `text` FROM 
+    tbl_customer_master as a
+    WHERE a.status='1' AND a.customername LIKE '%".$search."%' OR
+    a.contact LIKE '%".$search."%'";
+    //echo $query;
+    $query=$this->db->query($query);
+    return $query->result_array();
+  }
 
 }
 ?>

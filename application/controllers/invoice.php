@@ -13,7 +13,7 @@ class Invoice extends CI_Controller {
         $this->load->model('mastersetting_model');
         $data['products']=$this->mastersetting_model->get_products();
         $data['services']=$this->mastersetting_model->get_services();
-        $data['customers']=$this->mastersetting_model->get_customers();
+        //$data['customers']=$this->mastersetting_model->get_customers();
         //print_r($invoiceno);die;
         //print_r($data);die;
 		$this->load->view('header');
@@ -33,7 +33,6 @@ class Invoice extends CI_Controller {
     }
     public function get_customer_byid()
     {
-        // Call get_service_byproduct from invoice here, first Load Model
         $customer_id = $this->input->post('customer_id');
         //echo $customer_id;die;
         $this->load->model('invoice_model');
@@ -67,5 +66,18 @@ class Invoice extends CI_Controller {
         $data['status']=1;
         $this->output->set_output(json_encode($data));
       
+    }
+
+    // for search customer by name common only customers infor
+    public function get_allcustomer_byname()
+    {
+     if(isset($_GET['q']))
+     {
+        $search = $_GET['q'];
+        $this->load->model('invoice_model');
+        $data = $this->invoice_model->get_allcustomer_byname($search);
+        $this->output->set_output(json_encode($data));
+     
+     }
     }
 }
